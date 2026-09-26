@@ -3,14 +3,11 @@ Stage 2 of the pipeline: splitting documents into chunks.
 
 ⚠️ THIS IS THE FILE YOU CHANGE IN MILESTONE 3.
 
-`split_documents` below is deliberately plain. It cuts every document into
-fixed-size pieces with a fixed overlap and pays no attention to where sentences
-or paragraphs end. It works, and it is not good.
-
-On a corpus of short posts it may not cut anything at all: `campus_life` comes
-out as 88 documents and 88 chunks, because almost nothing in it reaches 800
-characters. That is the baseline, not a bug — Milestone 3 is where you decide
-whether one post should stay one chunk.
+`split_documents` below cuts on the guides' own `##` headings: one section, one
+chunk, each prefixed with the guide's title and the section's heading. The
+starter's version cut every document into fixed 800-character pieces, which on
+city_guides meant 51 chunks that started and ended mid-word ("urs", "9p") and
+ran straight across section boundaries. That version is `fallback_split`.
 
 Your job in Milestone 3 is to replace the *body* of `split_documents` with a
 strategy that fits the documents you actually read in Milestone 1. Keep the
@@ -22,6 +19,7 @@ to it, write down what you saw, and move on. That's a real observation about
 your pipeline, not giving up.
 """
 
+import re
 from dataclasses import dataclass
 
 import config
@@ -80,24 +78,80 @@ def fallback_split(
     return chunks
 
 
+def _sections(doc: Document) -> tuple[str, list[tuple[str, str]]]:
+    """
+    Break one markdown guide into its title and (heading, body) sections.
+
+    Text between the `#` title and the first `##` is the guide's intro; it
+    becomes its own section called "Overview". Hard line wraps inside a
+    paragraph are joined up, since they are formatting, not meaning.
+    """
+    lines = doc.text.split("\n")
+    if lines and lines[0].startswith("# "):
+        title, body = lines[0][2:].strip(), "\n".join(lines[1:])
+    else:
+        title, body = doc.source.rsplit(".", 1)[0], doc.text
+
+    parts = re.split(r"(?m)^## ", body)
+    raw = [("Overview", parts[0])]
+    for part in parts[1:]:
+        heading, _, text = part.partition("\n")
+        raw.append((heading.strip(), text))
+
+    sections = []
+    for heading, text in raw:
+        text = re.sub(r"(?<!\n)\n(?!\n)", " ", text.strip())
+        if text:
+            sections.append((heading, text))
+    return title, sections
+
+
+def _windows(text: str, size: int, overlap: int) -> list[str]:
+    """The safety net for a section too long to be one idea. Unused on city_guides."""
+    if len(text) <= size:
+        return [text]
+    pieces, start = [], 0
+    while True:
+        pieces.append(text[start : start + size])
+        if start + size >= len(text):
+            return pieces
+        start += size - overlap
+
+
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
+    Split each guide on its `##` headings: one section, one chunk.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
+    Every city_guides document is a `#` title followed by labelled sections
+    ("Getting there", "Eat and drink", "When to go"), and each section is one
+    self-contained idea of roughly 250–700 characters. The headings already
+    mark where one thought ends and the next begins, so they are the cut.
 
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
+    Each chunk starts with "{title} > {heading}: ". A section read on its own
+    often doesn't say which town it's about — "Buses run four times a day" —
+    and the prefix puts that back without copying text from its neighbours,
+    which is the job overlap does in a fixed-size chunker.
 
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    A section longer than config.SECTION_MAX_CHARS is windowed with
+    config.SECTION_OVERLAP so no chunk carries several unrelated ideas.
     """
-    return fallback_split(documents)
+    chunks: list[Chunk] = []
+    for doc in documents:
+        title, sections = _sections(doc)
+        index = 0
+        for heading, text in sections:
+            for piece in _windows(text, config.SECTION_MAX_CHARS, config.SECTION_OVERLAP):
+                chunks.append(
+                    Chunk(
+                        text=f"{title} > {heading}: {piece}",
+                        source=doc.source,
+                        index=index,
+                        produced_by="chunker.py::split_documents",
+                    )
+                )
+                index += 1
+
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:

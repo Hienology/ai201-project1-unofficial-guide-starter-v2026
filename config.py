@@ -30,6 +30,13 @@ CORPUS = os.getenv("AI201_CORPUS", "campus_life")
 CHUNK_SIZE = 800        # characters per chunk
 CHUNK_OVERLAP = 120     # characters shared between neighbouring chunks
 
+# split_documents cuts on `##` headings instead, so a chunk is a section, not a
+# character count. These two only matter if a section is ever too long to be
+# one idea: then it's windowed at this size with this overlap. No section in
+# city_guides reaches it — the longest is 691 characters.
+SECTION_MAX_CHARS = 1000
+SECTION_OVERLAP = 100
+
 
 # ─── Retrieval (Milestone 4) ─────────────────────────────────────────────────
 
