@@ -55,43 +55,54 @@ in at least 4 of 5 tries.
 
 ---
 
-## 4. Something about your chunks
+## 4. Chunks can answer a question on their own
 
-<!-- YOU WRITE THIS ONE.
+Every chunk `chunker.py::split_documents` produces is marked Y or N by hand in
+`results/chunk_review.md` (written and counted by `review_chunks.py`). **Y**
+means that, using only that chunk, someone could give a factually correct
+answer to a question about its topic — for a chunk covering several towns, a
+question about any one of them.
 
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
-
-     Examples of the right shape — don't copy these, they should come from
-     what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
-
-
+At least **60 of the 72** town-guide chunks and at least **15 of the 22**
+cross-cutting-guide chunks are marked Y. Both parts have to hold.
 
 **Why this target:**
-
-
+<!-- Why 60 and 15, and not higher or lower? And why a lower bar for the
+     cross-cutting guides than for the town guides? -->
 
 ---
 
-## 5. Your choice
+## 5. Answers are factual, precisely sourced, and concise
 
-<!-- YOU WRITE THIS ONE TOO.
+At least **4 of my 5** test questions get an answer that passes, **in every
+run**. An answer passes only if it clears three checks, in this order:
 
-     Pick something you actually care about getting right. It could be about
-     speed, about refusals, about a particular kind of question your corpus
-     handles badly, about source attribution being correct rather than merely
-     present — anything, as long as it names a number or an observable
-     outcome. -->
+1. **Factual** — it contains the question's `expects` phrase from
+   `questions.py`.
+2. **Precise** — every file it names is one listed for that question below.
+   Naming no file doesn't fail this check; criterion 2 covers that.
+3. **Concise** — it is at most **80 words per fact the question needs**: 80
+   words for questions 1–3, which need one fact each, and 160 for questions
+   4–5, which need two.
 
+| Question | Files that count as a correct reference | Facts needed |
+|---|---|---|
+| 1. Givens Mill tearoom | `guide_givens_mill.md` | 1 |
+| 2. Cheapest train tickets | `guide_regional_transport.md` | 1 |
+| 3. Halden Bay coastal path | `guide_halden_bay.md`, `guide_walking.md`, `guide_regional_transport.md` | 1 |
+| 4. Best town in winter | `guide_marchwood.md`, `guide_thornby_wells.md` | 2 |
+| 5. Nearest full hospital | `guide_accessibility.md`, which must be named; any of the nine town guides may be named alongside it | 2 |
 
+A fact is one claim that can be checked against the documents on its own; two
+claims are separate facts if one could be true while the other is false. The
+facts each question needs were counted from the answer key in `README.md`
+before any answers existed.
 
 **Why this target:**
-
-
+<!-- Why 4 of 5, and why 80 words per fact rather than tighter or looser?
+     Worth knowing: the prompt asks for "two or three sentences", and the
+     one answer seen so far (a baseline question, not one of these five)
+     carried about 4 facts in 56 words. -->
 
 ---
 
