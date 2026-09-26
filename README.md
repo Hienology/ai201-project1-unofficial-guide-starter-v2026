@@ -27,6 +27,25 @@
 
      Milestone 5. -->
 
+## Test Questions and Answer Key
+
+The five questions in `questions.py`, in the same order `run_eval.py` runs
+them, with where each answer actually lives in the corpus. To judge a generated
+answer, compare it against the quoted sentence: a correct answer contains the
+**expects** phrase.
+
+| # | Question | Correct answer contains | Where the answer is | The sentence it comes from |
+|---|---|---|---|---|
+| 1 | Which day of the week is the Givens Mill tearoom closed? | `Tuesday` | [guide_givens_mill.md › Eat and drink](corpora/city_guides/documents/guide_givens_mill.md#eat-and-drink) (line 15) | "A tearoom attached to the mill, open 10 to 4 daily except **Tuesdays**…" |
+| 2 | How far ahead should I book train tickets to get the cheapest fare? | `a week ahead` | [guide_regional_transport.md › The railway](corpora/city_guides/documents/guide_regional_transport.md#the-railway) (lines 9–10) | "Tickets are cheaper booked the day before than on the day, and considerably cheaper than that booked **a week ahead**." *"The day before" is in the same sentence and is the wrong answer.* |
+| 3 | When does the Halden Bay coastal path get closed? | `high wind` | [guide_halden_bay.md › When to go](corpora/city_guides/documents/guide_halden_bay.md#when-to-go) (line 27). Also [guide_walking.md › Serious, and weather-dependent](corpora/city_guides/documents/guide_walking.md#serious-and-weather-dependent) (lines 30–31) and [guide_regional_transport.md › Walking and cycling](corpora/city_guides/documents/guide_regional_transport.md#walking-and-cycling) (line 41) | "The coastal path is genuinely dangerous in **high wind** and gets shut." |
+| 4 | Which town is the best place to visit in winter? | `Marchwood` | [guide_marchwood.md › When to go](corpora/city_guides/documents/guide_marchwood.md#when-to-go) (line 27), backed up by [guide_thornby_wells.md › When to go](corpora/city_guides/documents/guide_thornby_wells.md#when-to-go) (line 27) | "This is the one place in the region that works in winter…" and "…the region's most reliable winter destination after **Marchwood**." *Thornby Wells is second, not first.* |
+| 5 | Where is the nearest full hospital? | `Marchwood` | [guide_accessibility.md › Practical](corpora/city_guides/documents/guide_accessibility.md#practical) (line 45). **Contradicted** by the "Practical notes" paragraph repeated in all 9 town guides, e.g. [guide_halden_bay.md › Practical notes](corpora/city_guides/documents/guide_halden_bay.md#practical-notes) (line 33) | "The nearest full hospital is in **Marchwood**. Brightwater has a hospital…" versus the town guides' "The nearest full hospital is in Brightwater…" *An answer of "Brightwater" is the one the repeated paragraph produces; see the comment in `questions.py`.* |
+
+The five `OUT_OF_SCOPE` questions at the bottom of `questions.py` have no
+answer anywhere in the corpus. The correct result for each is the refusal:
+"I don't have enough information about that."
+
 ## Chunking Strategy
 
 **Chunk size:**
@@ -44,38 +63,37 @@
 
 ## Sample Chunks
 
-<!-- Five chunks, pasted as text. Label each one and name the file it came from
-     AND the function that produced it — the grader checks your code against
-     what you claim here.
+Printed by `python app.py chunks -n 5`, which samples evenly across all 94
+chunks, and copied across unedited.
 
-     `python app.py chunks -n 5` prints all three for you. Copy them straight
-     across.
-
-     Milestone 3. -->
-
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: `guide_accessibility.md#0` — produced by: `chunker.py::split_documents`
 
 ```
+Getting around the region with limited mobility > Overview: An honest assessment rather than a promotional one. Some of these places are difficult and it is better to know in advance.
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source: `guide_corry_vale.md#5` — produced by: `chunker.py::split_documents`
 
 ```
+Corry Vale > Where to stay: Perhaps thirty beds in the entire valley, spread across two pubs and a handful of farmhouse rooms. In summer these are booked months ahead. Camping is permitted on two marked fields and nowhere else.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source: `guide_givens_mill.md#2` — produced by: `chunker.py::split_documents`
 
 ```
+Givens Mill > Getting around: Everything is on one street along the river. The mill is at one end and the church at the other, eight minutes apart. The riverside path continues in both directions for as far as you want to walk.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: `guide_kestrelford.md#4` — produced by: `chunker.py::split_documents`
 
 ```
+Kestrelford > What to see: The market square on a Saturday morning is the main event and has run continuously since the 1400s. The parish church has a 13th-century tower you can climb for £2. The old trackbed walk runs six miles to the next village along an easy gradient and is the best half-day here.
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: `guide_pellew_sands.md#6` — produced by: `chunker.py::split_documents`
 
 ```
+Pellew Sands > When to go: June and September for the beach without the crowds. July and August are busy and the town is at its most itself, for better and worse. Winter is bleak, largely closed, and has a following among people who like that sort of thing.
 ```
 
 ## Sample Answer
