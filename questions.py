@@ -22,12 +22,34 @@ names a target of "4 of 5", and four of three is not a thing.
 """
 
 QUESTIONS = [
-    # {"question": "...", "expects": "..."},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
-    {"question": "", "expects": ""},
+    # Only a town guide answers this (guide_givens_mill.md).
+    {
+        "question": "Which day of the week is the Givens Mill tearoom closed?",
+        "expects": "Tuesday",
+    },
+    # Only a cross-cutting guide answers this (guide_regional_transport.md).
+    {
+        "question": "How far ahead should I book train tickets to get the cheapest fare?",
+        "expects": "a week ahead",
+    },
+    # Both kinds say it: Halden Bay's guide plus walking and regional transport.
+    {
+        "question": "When does the Halden Bay coastal path get closed?",
+        "expects": "high wind",
+    },
+    # Needs more than one document: Marchwood's and Thornby Wells's "When to go"
+    # sections, competing with every other town's winter notes.
+    {
+        "question": "Which town is the best place to visit in winter?",
+        "expects": "Marchwood",
+    },
+    # The documents disagree: every town guide's "Practical notes" says
+    # Brightwater, guide_accessibility.md says Marchwood — and it is the one
+    # source that tells Brightwater's hospital apart from the full one.
+    {
+        "question": "Where is the nearest full hospital?",
+        "expects": "Marchwood",
+    },
 ]
 
 # Questions from a different world entirely. Your gate should refuse all five.
