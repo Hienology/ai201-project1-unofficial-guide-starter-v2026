@@ -1,0 +1,24 @@
+Q2: How far ahead should I book train tickets to get the cheapest fare?
+Answer chunk guide_regional_transport.md#0 ranks 11 of 94 at 0.731; top-k is 5, cutoff 0.56.
+Top hit: guide_marchwood.md#2 at 0.604.
+
+A · CHUNKING — the answer chunk's two paragraphs, each with the same prefix:
+    whole chunk, as indexed      0.731
+    line and timetable paragraph 0.775
+    tickets paragraph alone      0.545
+    (today's top hit is 0.604; the cutoff is 0.56)
+
+B · EMBEDDING — the question's content words, as exact words:
+    ahead     answer chunk: yes  top hit: no
+    book      answer chunk: no   top hit: no
+    cheapest  answer chunk: no   top hit: no
+    fare      answer chunk: no   top hit: no
+    tickets   answer chunk: yes  top hit: no
+    train     answer chunk: no   top hit: no
+    (close forms: the answer chunk has 'booked' and 'cheaper'; the top hit has 'ticket' and 'fares')
+    reworded in the chunk's own terms: "How far ahead should I book railway tickets to get them cheaper?"
+    → answer chunk ranks 8 at 0.761 (was 11, 0.731)
+
+C · RETRIEVAL — the same 94 chunks ranked by keywords (BM25, rank_bm25) instead of meaning:
+    answer chunk ranks 2 of 94 (by meaning: 11)
+    BM25 top 3: guide_elder_ness.md#5 · guide_regional_transport.md#0 · guide_pellew_sands.md#5
