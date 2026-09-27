@@ -1,0 +1,42 @@
+Top-k 5, cutoff 0.56. Rank = position of the first chunk containing the
+question's expects phrase. Q1 tearoom · Q2 tickets · Q3 coastal path · Q4 winter · Q5 hospital.
+
+strategy              chunks  median words    Q1  Q2  Q3  Q4  Q5    in top 5   pass gate   nearest out-of-scope
+whole guide               14           372     1   6   1   1   1       4 of 5       2 of 5                  0.841
+fixed 800 (starter)       51           137     2  12   3   1   6       3 of 5       4 of 5                  0.829
+fixed 400                 93            70     2   8   1   5   9       3 of 5       5 of 5                  0.799
+## section (in use)       94            52     1  11   2   3   1       4 of 5       4 of 5                  0.818
+paragraph                115            48     1   1   1   6   1       4 of 5       5 of 5                  0.818
+sentence                 317            21     2   1   1   1   1       5 of 5       5 of 5                  0.772
+
+Top 6 for Q2 with ## section (in use) chunks:
+  1   0.604  Marchwood > Getting around: A tram network of four lines, running every 8 minutes on wee
+  2   0.625  Kestrelford > When to go: Late spring and early autumn. The Saturday market runs year-ro
+  3   0.688  Eating across the region > Markets: Kestrelford's Saturday market has run since the 1400
+  4   0.694  Marchwood > Getting there: Every railway line in the region meets here, which is the cit
+  5   0.695  Givens Mill > When to go: The mill runs March to November and is closed entirely in wint
+  6   0.699  Pellew Sands > Getting around: The seafront runs two miles and is flat the whole way. Ev
+
+Top 6 for Q4 with ## section (in use) chunks:
+  1   0.517  Walking in the region > Seasonal notes: Add four minutes to any Brightwater walking esti
+  2   0.554  Halden Bay > When to go: June and September are the sweet spot. July and August are busy
+  3 ✓ 0.575  Thornby Wells > When to go: Year-round, genuinely. The gardens are best in May and June.
+  4 ✓ 0.595  Marchwood > When to go: Any time. This is the one place in the region that works in wint
+  5   0.597  When to visit the region > Autumn, September to November: September is the other sweet s
+  6   0.610  Kestrelford > When to go: Late spring and early autumn. The Saturday market runs year-ro
+
+Top 6 for Q2 with paragraph chunks:
+  1 ✓ 0.545  Getting around the region > The railway: Tickets are cheaper booked the day before than 
+  2   0.604  Marchwood > Getting around: A tram network of four lines, running every 8 minutes on wee
+  3   0.625  Kestrelford > When to go: Late spring and early autumn. The Saturday market runs year-ro
+  4   0.683  Getting around the region with limited mobility > Straightforward: **Marchwood** has a m
+  5   0.688  Eating across the region > Markets: Kestrelford's Saturday market has run since the 1400
+  6   0.690  Walking in the region > Easy, on good surfaces: The **Kestrelford trackbed** follows the
+
+Top 6 for Q4 with paragraph chunks:
+  1   0.535  When to visit the region > Winter, December to February: Brightwater carries on, since t
+  2   0.548  Walking in the region > Seasonal notes: The Kestrelford approach road is not gritted abo
+  3   0.554  Halden Bay > When to go: June and September are the sweet spot. July and August are busy
+  4   0.557  Getting around the region with limited mobility > Straightforward: **Thornby Wells** is 
+  5   0.563  Walking in the region > Easy, on good surfaces: **Thornby Wells** has flat, formal garde
+  6 ✓ 0.575  Thornby Wells > When to go: Year-round, genuinely. The gardens are best in May and June.
