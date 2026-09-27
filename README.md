@@ -188,6 +188,41 @@ hospitals and answer no specific question. That disagreement showed check 1's
 wording can be read two ways, which I'm leaving on record for Unit 2 rather
 than rewording after the count.
 
+### In unit 2
+
+**3. Keeping the two models apart.** Gemini writes the answers being tested,
+and Claude was helping me build and check the system, so I told Claude I
+didn't want the two mixed up. We set a rule before any results existed: the
+scorer is plain text matching (`scorer.py`), and Claude builds the tools but
+never decides whether an answer is right. Where a text match can't be trusted,
+`summarize_run.py` lists the answer for me instead. That's how the three Q4
+answers after the fix came to me: they don't contain "Marchwood", and I read
+them and kept the fails, because the seasons guide they drew on compares no
+towns at all.
+
+**4. The diagnosis started from my question.** I asked Claude for possible
+causes at different stages, unranked, and it brought one measured check per
+stage. What decided it for me was a question I asked on looking at the answer
+chunk: why is the railway line and its timetable in front of the ticket
+prices, when the question only asks about tickets? That is the mechanism —
+two ideas under one heading, one embedding for both — and Claude then showed
+the tickets paragraph on its own sits at 0.545 where the whole chunk is at
+0.731. When I suggested testing different chunk sizes against the same
+measures, it ran six, and warned me that picking the winner on my five
+questions would be tuning to the test; the table went in as evidence for the
+diagnosis, not as a way to choose.
+
+**5. Asking Claude to pick the one fix — and to show its work.** I asked it to
+choose, and to write up the other two with measurements rather than opinions.
+It picked paragraph chunking because it was the only candidate acting at the
+stage I'd diagnosed, and simulated the other two without changing the system:
+hybrid search got Q2's answer into the top five but the gate still refused it,
+and a helpful refusal would have pointed Q2 to three wrong files. The after
+run then showed exactly the trade its comparison had predicted — Q2 fixed, Q4
+broken. What I changed: I checked its after-run work where it needed a
+person, auditing ten re-marked chunks (agreeing on 8) and judging Q4's flagged
+answers myself.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
@@ -327,7 +362,8 @@ target with no margin.
 - `results/chunking_comparison.txt` (`compare_chunkings.py`) — six ways of
   cutting the same guides, scored the same way. Cutting by paragraph moves Q2
   from 11th to 1st at 0.545, under the cutoff; but it also moves Q4's answer
-  from 3rd to 6th, because the split cross-cutting paragraphs about winter get
+  from 3rd to 6th, because four of the newly split cross-cutting paragraphs —
+  two about winter, two about Thornby Wells being easy to get around — get
   sharper and crowd it out. No chunk size wins everywhere: coarser chunks blur,
   finer ones lose context.
 
@@ -431,8 +467,9 @@ question. Criterion 2 went from 4 of 5 in every run to 5 of 5 in every run:
 Q2's tickets paragraph now ranks 1st at 0.545, passes the gate, and every
 answer names `guide_regional_transport.md`. Criteria 1 and 5 stayed at 4 of
 5, but the miss moved from Q2 to Q4. Splitting the cross-cutting sections made
-their winter paragraphs sharper, they now fill Q4's top five (best 0.535), and
-the chunks that name Marchwood fell to 6th and below. With them gone, the
+their paragraphs sharper; four of the new ones — two about winter, two about
+Thornby Wells being easy to get around — now sit in Q4's top five (best
+0.535), and the chunks that name Marchwood fell to 6th and below. With them gone, the
 model said the documents don't name a best winter town and summarised
 `guide_seasons.md` instead — honest, but not the answer. Criterion 3 didn't
 move (5 of 5, nearest out-of-scope still 0.818), and criterion 4's
@@ -447,17 +484,131 @@ the before and after runs differ only in that one commit, and the same
 
 ## What's Still Broken
 
-<!-- For each criterion still missed after your fix: what you'd do about it,
-     and why you stopped where you did.
+No criterion is missed after the fix. That isn't the same as nothing being
+broken.
 
-     "I ran out of time" is fine if it's true. Pretending nothing is left is
-     not.
+**Q4 now fails, in every run.** Splitting the cross-cutting sections made
+their paragraphs sharper, and four of the new ones — two about winter, two
+about Thornby Wells being easy to get around — now sit in Q4's top five (best
+distance 0.535), pushing the two chunks that name Marchwood down to 6th and
+below. With nothing in front of it that compares towns, the model says the
+documents don't name a best winter town. Criteria 1 and 5 hold at 4 of 5 only
+because Q4 is the single miss — the same zero margin Q2 used to cause. The
+system still has one failing question; it's just a different one.
 
-     Milestone 5. -->
+What I'd do next, and why I stopped:
+
+1. **Short, helpful refusals** — the behaviour I asked for in Step 9, before
+   any results. When the answer isn't in what was retrieved, say so in one
+   line and name where to look, then stop. The after-run Q4 answers did the
+   first half and then kept summarising the seasons guide; the gate's refusal
+   does neither. The simulation in `results/alternatives.txt` says the
+   pointers need their own cutoff first: for Q2 they'd have pointed to three
+   files, none of them the right one.
+2. **A retrieval change aimed at Q4** — top-k 6, or hybrid search. With
+   paragraph chunks, Thornby Wells › When to go sits 6th at 0.575, so top-k 6
+   would put a Marchwood-naming chunk in front of the model without touching
+   the gate; hybrid search brought Q2's answer into its top five in
+   simulation. Neither is tested, and either could break something else, so
+   each needs its own before-and-after run.
+
+I stopped because unit 2 allows one change, and I spent it on the stage my
+diagnosis pointed to. A second change in the same run would have made the
+before-and-after comparison impossible to read.
+
+**Refusals are either bare or long-winded.** The gate's refusal is a fixed
+sentence that names no file — that's what missed criterion 2 before the fix.
+The model's own refusals (the Milestone 4 probe, Q4 after the fix) name files
+but go on for a paragraph. Neither restates the question or says which part of
+it the documents don't cover.
+
+**The corpus contradicts itself, and the system just repeats it.** The
+hospital conflict is handled, because Q5 was built to test it and the model
+reports both sides. Others aren't: Marchwood's guide says trains to
+Brightwater run "every 40 minutes until 11pm" where Brightwater's and the
+transport guide say eleven a day, and the walking guide gives Corry Vale's
+"not gritted above the second village" to Kestrelford. Nothing in the pipeline
+notices a contradiction; an answer built from one of those chunks states it as
+fact.
+
+**The gate only catches questions from another world.** Criterion 3 is 5 of
+5, but its out-of-scope questions sat at 0.818 and up. Questions the corpus
+can't answer but sounds like it could — vegetarian restaurants in Kestrelford
+(0.371), the last Marchwood airport bus (0.377) — pass the gate at any
+sensible cutoff, and only the prompt stands between them and a guess.
 
 ## What I'd Do Differently
 
-<!-- Knowing what you know now — which of your five criteria would you write
-     differently, and why?
+### The criteria I'd write differently
 
-     Milestone 5. -->
+1. **Criterion 4, check 1 ("answerable alone").** I wrote "a question about
+   its topic", and it reads two ways: *any* single question (Claude's reading —
+   "is cash useful here?") or a *specific* question the chunk as a whole
+   answers (mine). That's why I disagreed with Claude on the "Practical notes"
+   chunks in both audits. I'd write: "Using only this chunk, someone could
+   correctly answer one specific question about its heading."
+2. **Criterion 4, check 3 ("one line of ideas").** I judged the same chunk —
+   the accessibility guide's intro, with the same marks — differently in the
+   two audits: I agreed the first time and disagreed the second. A check I
+   can't answer the same way twice isn't measuring anything. I'd define
+   "serves its heading" with one example that passes and one that fails, or
+   drop the check.
+3. **Criterion 4, check 4 ("concrete").** Counting digits, number words, days
+   and months missed chunks that are full of facts without a number in them —
+   Elder Ness › What to see ("spring and autumn migration") fails it. I'd count
+   named places and seasons too.
+4. **Criterion 4's targets.** 60 of 72 and 15 of 22 were what I expected, not
+   what good looks like; ideally both would be 90–100%. I only asked about that
+   after I'd seen the count, when raising them would have been moving the
+   goalposts the other way, so they stayed. And "15 of 22" stopped fitting as
+   soon as the chunk count changed to 43 — I'd write it as a share.
+5. **Criterion 3.** Questions from another world (Mongolia, Rust) were never
+   close to the cutoff, so 5 of 5 tested almost nothing. I'd use near misses —
+   questions about these towns the guides can't answer — and measure the whole
+   system's refusal, gate and prompt together, because the gate alone can't
+   catch them.
+6. **Criterion 5's word limit.** 80 words per fact was generous on purpose,
+   but so generous it never came close: the longest answer in either run was
+   54 words. I'd set it near 40.
+7. **Criteria 1 and 5, and the questions behind them.** "4 of 5" because 3 of
+   5 felt average — but with only five questions, one hard question decided
+   both criteria, before the fix and after it. I'd write ten or more. And I'd
+   pick `expects` phrases that appear only in the answer: "Tuesday" is also in
+   two chunks about Brightwater's Tuesday market, "a week ahead" in two about
+   booking Sunday lunch, and "Marchwood" in 17 of 115 chunks, so criterion 1's
+   text match could pass on the wrong chunk. None did, but nothing stopped it.
+
+### What was hard, and what I'd change about how I worked
+
+- **Two projects in one weekend.** I joined the course at the start of unit 2,
+  so project 1 and project 2 had to be built in order, in the same repo, with
+  the link due Monday and everything due Wednesday.
+- **Judging answers without reading the whole corpus.** At first I couldn't
+  see how I could give real input on documents I hadn't read. The answer key
+  at the top of this README — each question, the section that answers it, and
+  the exact sentence — is what made it possible: I compared answers to one
+  row, not to fourteen guides. But I'd still read one town guide and one
+  cross-cutting guide first next time. I only saw the "two ideas under one
+  heading" problem when I looked at the railway chunk myself.
+- **Two AI models in one project.** Gemini writes the answers and Claude was
+  helping me build and check the system, and I was worried the two would get
+  mixed up. The rule that fixed it: Gemini is the system under test, the
+  scorer is plain text matching, and Claude never decides whether an answer is
+  right — where a match can't be trusted, the answer is shown to me.
+- **Thinking in hyperparameters.** I kept wanting to tune numbers until they
+  looked right. The lesson was about timing: a target is written and committed
+  before the measurement and never moved. I nearly broke that twice — asking
+  about 90% chunk targets after the count, and proposing a 0.61 cutoff, which
+  would have let through the very question my rule said to refuse.
+- **Numbers I couldn't picture.** Distances meant nothing to me until I saw
+  them next to questions: an unanswerable question about vegetarian
+  restaurants in Kestrelford (0.371) sits closer than my real tearoom question
+  (0.379). That's when it clicked that distance measures topic, not whether the
+  answer exists.
+- **Marking 94 chunks by hand.** It wasn't realistic, so Claude marked the
+  judgment checks against my rubric and I audited ten at random, twice. It
+  worked, but the audits showed my own checks weren't as clear as I'd thought.
+- **Defaults I never chose.** I only asked where "top 5" came from in the
+  diagnosis step. Next time I'd list every inherited default at the start —
+  top-k, the embedding model, the prompt — and decide which ones I'm actually
+  choosing.
