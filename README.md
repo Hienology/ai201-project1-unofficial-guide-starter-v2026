@@ -1,19 +1,6 @@
 # The Unofficial Guide
 
-<!-- Replace this line with your name and which corpus you picked. -->
-
-> **This file is your submission.** Fill it in as you go — most sections get
-> written during the milestone that produces them, not at the end.
->
-> How the starter works, and every command you'll need, is in `RUNNING.md`.
-> Leave that file alone.
->
-> **Paste everything as text.** No screenshots, no video. A typed table gets
-> full credit; a picture of the same table gets none.
->
-> Delete these instruction blocks as you replace them. The `<!-- -->` comments
-> are notes to you and don't show up when the page renders — you can leave them
-> or remove them.
+**Hien Vo** — corpus: `city_guides`
 
 ---
 
@@ -40,7 +27,7 @@ answer, compare it against the quoted sentence: a correct answer contains the
 **expects** phrase.
 
 | # | Question | Correct answer contains | Where the answer is | The sentence it comes from |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | Which day of the week is the Givens Mill tearoom closed? | `Tuesday` | [guide_givens_mill.md › Eat and drink](corpora/city_guides/documents/guide_givens_mill.md#eat-and-drink) (line 15) | "A tearoom attached to the mill, open 10 to 4 daily except **Tuesdays**…" |
 | 2 | How far ahead should I book train tickets to get the cheapest fare? | `a week ahead` | [guide_regional_transport.md › The railway](corpora/city_guides/documents/guide_regional_transport.md#the-railway) (lines 9–10) | "Tickets are cheaper booked the day before than on the day, and considerably cheaper than that booked **a week ahead**." *"The day before" is in the same sentence and is the wrong answer.* |
 | 3 | When does the Halden Bay coastal path get closed? | `high wind` | [guide_halden_bay.md › When to go](corpora/city_guides/documents/guide_halden_bay.md#when-to-go) (line 27). Also [guide_walking.md › Serious, and weather-dependent](corpora/city_guides/documents/guide_walking.md#serious-and-weather-dependent) (lines 30–31) and [guide_regional_transport.md › Walking and cycling](corpora/city_guides/documents/guide_regional_transport.md#walking-and-cycling) (line 41) | "The coastal path is genuinely dangerous in **high wind** and gets shut." |
@@ -90,31 +77,31 @@ chunks, and copied across unedited.
 
 **Chunk 1** — source: `guide_accessibility.md#0` — produced by: `chunker.py::split_documents`
 
-```
+```text
 Getting around the region with limited mobility > Overview: An honest assessment rather than a promotional one. Some of these places are difficult and it is better to know in advance.
 ```
 
 **Chunk 2** — source: `guide_corry_vale.md#5` — produced by: `chunker.py::split_documents`
 
-```
+```text
 Corry Vale > Where to stay: Perhaps thirty beds in the entire valley, spread across two pubs and a handful of farmhouse rooms. In summer these are booked months ahead. Camping is permitted on two marked fields and nowhere else.
 ```
 
 **Chunk 3** — source: `guide_givens_mill.md#2` — produced by: `chunker.py::split_documents`
 
-```
+```text
 Givens Mill > Getting around: Everything is on one street along the river. The mill is at one end and the church at the other, eight minutes apart. The riverside path continues in both directions for as far as you want to walk.
 ```
 
 **Chunk 4** — source: `guide_kestrelford.md#4` — produced by: `chunker.py::split_documents`
 
-```
+```text
 Kestrelford > What to see: The market square on a Saturday morning is the main event and has run continuously since the 1400s. The parish church has a 13th-century tower you can climb for £2. The old trackbed walk runs six miles to the next village along an easy gradient and is the best half-day here.
 ```
 
 **Chunk 5** — source: `guide_pellew_sands.md#6` — produced by: `chunker.py::split_documents`
 
-```
+```text
 Pellew Sands > When to go: June and September for the beach without the crowds. July and August are busy and the town is at its most itself, for better and worse. Winter is bleak, largely closed, and has a following among people who like that sort of thing.
 ```
 
@@ -128,7 +115,7 @@ sent (`--show-prompt`), is in `results/milestone4_sample_answer.txt`.
 
 **Answer:**
 
-```
+```text
   (best distance 0.346, cutoff 0.56)
 
 Based on `guide_accessibility.md`, the nearest full hospital is in Marchwood. (However, the town-specific guides `guide_givens_mill.md`, `guide_kestrelford.md`, `guide_halden_bay.md`, and `guide_marchwood.md` state that the nearest full hospital is in Brightwater.)
@@ -163,7 +150,7 @@ sensible cutoff. For those, the only guard is the grounding instruction in
 Raw output: `results/milestone4_retrieval.txt`, from `python app.py retrieve`.
 
 | Question | In corpus? | Best distance | At 0.56 |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | When does the Halden Bay coastal path get closed? | yes | 0.292 | answered |
 | Where is the nearest full hospital? | yes | 0.346 | answered |
 | Which day of the week is the Givens Mill tearoom closed? | yes | 0.379 | answered |
@@ -192,9 +179,7 @@ question it expected to miss put the right chunk first (0.346).
 
 **2. Marking the chunks for criterion 4.** Reading all 94 chunks by hand
 wasn't practical, so Claude turned the standards I'd given it — factually
-correct, precise, concise, coherent — into a five-check rubric, which I
-approved before anything was marked. A script marks the three mechanical
-checks; Claude marked the two that need reading, 188 marks in all, 3 of them
+correct, precise, concise, coherent — into a five-check (scored 1-5) rubric, which I approved before anything was marked. A script marks the three mechanical checks; Claude marked the two that need reading, 188 marks in all, 3 of them
 N, each with a reason. I audited ten chunks drawn at random with a fixed seed
 and agreed on 8. I disagreed on two copies of the repeated "Practical notes"
 paragraph: Claude called them answerable on their own because you could ask
@@ -229,10 +214,10 @@ than rewording after the count.
      Milestone 1. -->
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
-|---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
+| --- | --- | --- | --- | --- | --- |
+| 1. Retrieved chunk contains the answer | 4 of 5 | | | | |
+| 2. Every answer names a source | 5 of 5 | | | | |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | | | | |
 | 4. | | | | | |
 | 5. | | | | | |
 
@@ -252,12 +237,12 @@ than rewording after the count.
      Milestone 2. -->
 
 | # | Criterion | Verdict | How I decided |
-|---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| --- | --- | --- | --- |
+| 1 | | | |
+| 2 | | | |
+| 3 | | | |
+| 4 | | | |
+| 5 | | | |
 
 ## Diagnoses
 
@@ -294,10 +279,10 @@ than rewording after the count.
      `python run_eval.py --label after` -->
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
-|---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
+| --- | --- | --- | --- | --- | --- |
+| 1. Retrieved chunk contains the answer | 4 of 5 | | | | |
+| 2. Every answer names a source | 5 of 5 | | | | |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | | | | |
 | 4. | | | | | |
 | 5. | | | | | |
 

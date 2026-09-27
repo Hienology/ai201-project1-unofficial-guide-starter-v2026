@@ -5,7 +5,7 @@
 - A chunk passes at 4 or more of 5.
 
 | # | Check | Marked by |
-|---|---|---|
+| --- | --- | --- |
 | 1 | **Answerable alone** — Using only this chunk, someone could give a factually correct answer to a question about its topic (for a chunk covering several towns: a question about any one of them). | Claude |
 | 2 | **Whole unit** — It starts with "Guide > Section:" and ends at the end of a sentence. | script |
 | 3 | **One line of ideas** — Every sentence serves the topic named in its heading. | Claude |

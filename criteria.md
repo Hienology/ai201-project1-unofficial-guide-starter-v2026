@@ -65,7 +65,7 @@ Every chunk `chunker.py::split_documents` produces is scored on five yes/no
 checks, and passes at **4 or more of 5**:
 
 | # | Check | Marked by |
-|---|---|---|
+| --- | --- | --- |
 | 1 | **Answerable alone** — using only this chunk, someone could give a factually correct answer to a question about its topic (for a chunk covering several towns: a question about any one of them) | Claude, with a reason for every N |
 | 2 | **Whole unit** — it starts with "Guide > Section:" and ends at the end of a sentence | `review_chunks.py` |
 | 3 | **One line of ideas** — every sentence serves the topic named in its heading | Claude, with a reason for every N |
@@ -102,7 +102,7 @@ run**. An answer passes only if it clears three checks, in this order:
    4–5, which need two.
 
 | Question | Files that count as a correct reference | Facts needed |
-|---|---|---|
+| --- | --- | --- |
 | 1. Givens Mill tearoom | `guide_givens_mill.md` | 1 |
 | 2. Cheapest train tickets | `guide_regional_transport.md` | 1 |
 | 3. Halden Bay coastal path | `guide_halden_bay.md`, `guide_walking.md`, `guide_regional_transport.md` | 1 |

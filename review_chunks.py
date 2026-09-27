@@ -193,7 +193,7 @@ def write_sheet(rows, corpus: str) -> None:
         f"- A chunk passes at {PASS_MARK} or more of 5.",
         "",
         "| # | Check | Marked by |",
-        "|---|---|---|",
+        "| --- | --- | --- |",
     ]
     lines += [f"| {k} | **{name}** — {rule} | {who} |" for k, (name, who, rule) in CHECKS.items()]
 
