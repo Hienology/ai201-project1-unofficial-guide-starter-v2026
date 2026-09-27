@@ -15,7 +15,7 @@ with either, and a few words on why after an N.
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S2 · B20 · guide_walking.md#1
 
@@ -25,7 +25,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: N (the Givens Mill–Brightwater walk is 'easy underfoot' along a river, not a walk with hills, and it already appears under 'Easy, on good surfaces')
 
-Agree: [ ]
+Agree: [Y]
 
 ### S3 · A32 · guide_givens_mill.md#7
 
@@ -33,7 +33,7 @@ Agree: [ ]
 
 Claude: check 1: Y (Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood) · check 3: Y
 
-Agree: [ ]
+Agree: [N] — nothing worth answering from. Incoherent theme: cash and cards -> mobile coverage -> full hospital and medical centres; more like things to take notice of, or something inconvenient, than an answer to a specific question.
 
 ### S4 · A44 · guide_kestrelford.md#3
 
@@ -41,7 +41,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S5 · B1 · guide_accessibility.md#0
 
@@ -49,7 +49,7 @@ Agree: [ ]
 
 Claude: check 1: N (no facts about any place — it describes the guide's own approach, so there is nothing to answer a question from) · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S6 · A27 · guide_givens_mill.md#2
 
@@ -57,7 +57,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S7 · A72 · guide_thornby_wells.md#7
 
@@ -65,7 +65,7 @@ Agree: [ ]
 
 Claude: check 1: Y (Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood) · check 3: Y
 
-Agree: [ ]
+Agree: [N] — nothing worth answering from. Incoherent theme: cash and cards -> mobile coverage -> full hospital and medical centres; more like things to take notice of, or something inconvenient, than an answer to a specific question.
 
 ### S8 · A71 · guide_thornby_wells.md#6
 
@@ -73,7 +73,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S9 · A70 · guide_thornby_wells.md#5
 
@@ -81,7 +81,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S10 · A51 · guide_marchwood.md#2
 
@@ -89,4 +89,21 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
+
+---
+
+## Also checked by the student: checks 2, 4 and 5
+
+Not part of the audit above — these three are marked by `review_chunks.py`, not
+by Claude — but re-read by hand on the same ten chunks:
+
+- **Check 2:** all ten pass. S2 has two paragraphs, and the second doesn't
+  start with "Guide > Section".
+- **Check 4:** S5 has nothing concrete. S3 and S7 are completely similar, with
+  nothing noticeable beyond "a" and "cards".
+- **Check 5:** S3 and S7 follow the same structure and read the same, though
+  they come from different guides.
+
+The script's marks on these ten, for comparison: check 2 Y on all ten; check 4
+N on S3, S5 and S7; check 5 N on S3 and S7.
