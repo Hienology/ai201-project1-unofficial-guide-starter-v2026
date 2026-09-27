@@ -108,20 +108,44 @@ Pellew Sands > When to go: June and September for the beach without the crowds. 
 ```
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.56 (`THRESHOLD` in `config.py`)
 
-<!-- The number you set in config.py, and how you got there.
+The two groups don't overlap. My five questions' best distances run
+0.292–0.604; the five out-of-scope ones run 0.818–0.968. The course's method
+puts the cutoff in that gap, but I put it **below** the gap on purpose,
+because my rule is that when retrieval misses, the system should honestly say
+no:
 
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
+- **Q2 (0.604)** is the one question whose answer isn't in its top five
+  chunks. The chunk that answers it ranks 11th (distance 0.731); the top hit
+  is Marchwood's tram-ticket section, which shares the words *ticket* and
+  *fare*. At 0.56 the gate refuses it instead of handing the model five chunks
+  that don't contain the answer.
+- **Q4 (0.517)** has its answer at ranks 3 and 4, so it should get through.
+- 0.56 is the middle of those two, leaving about 0.04 either side. 0.6 would
+  also have refused Q2, but by only 0.004.
 
-     Milestone 4. -->
+What the gate can't do: distance measures how close the *topic* is, not
+whether the answer exists. Questions this corpus can't answer but that sound
+like it can — vegetarian restaurants in Kestrelford (0.371), the last
+Marchwood airport bus (0.377) — sit as close as my real questions and pass any
+sensible cutoff. For those, the only guard is the grounding instruction in
+`generate.py`.
 
-| Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+Raw output: `results/milestone4_retrieval.txt`, from `python app.py retrieve`.
+
+| Question | In corpus? | Best distance | At 0.56 |
+|---|---|---|---|
+| When does the Halden Bay coastal path get closed? | yes | 0.292 | answered |
+| Where is the nearest full hospital? | yes | 0.346 | answered |
+| Which day of the week is the Givens Mill tearoom closed? | yes | 0.379 | answered |
+| Which town is the best place to visit in winter? | yes | 0.517 | answered |
+| How far ahead should I book train tickets to get the cheapest fare? | yes | 0.604 | **refused** |
+| What is the capital of Mongolia? | no | 0.818 | refused |
+| What is the recommended dosage of ibuprofen for a headache? | no | 0.843 | refused |
+| How do I write a for loop in Rust? | no | 0.852 | refused |
+| How do I change the oil in a diesel engine? | no | 0.884 | refused |
+| Who won the 1994 World Cup? | no | 0.968 | refused |
 
 ## How I Used AI
 

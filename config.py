@@ -50,7 +50,12 @@ TOP_K = 5               # how many chunks to pull back per question
 # 0.6 is a reasonable starting point, not a right answer. Milestone 4 has you
 # measure your own two groups of distances and put the cutoff in the gap.
 # Most corpora land somewhere between 0.45 and 0.75.
-THRESHOLD = 0.6
+#
+# Measured on city_guides: my five questions' best distances run 0.292–0.604,
+# the five out-of-scope ones 0.818–0.968. 0.56 sits below that gap on purpose:
+# when retrieval misses, say no. It refuses Q2 (0.604), whose answer isn't in
+# its top five, and keeps Q4 (0.517), whose answer is. See README.
+THRESHOLD = 0.56
 
 
 # ─── Models ──────────────────────────────────────────────────────────────────

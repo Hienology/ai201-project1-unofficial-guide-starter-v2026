@@ -49,9 +49,13 @@ in at least 4 of 5 tries.
      what happened into your run log. Swap them for your own if you'd rather —
      just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
 
-**Why this target:**
-<!-- What did your distances look like when you set the cutoff in Milestone 4?
-     Was there a clean gap, or did the two groups overlap? -->
+**Why this target:** When I set the cutoff, the two groups didn't overlap: my
+five questions' best distances ran 0.292–0.604 and the five out-of-scope ones
+0.818–0.968. I put the cutoff at 0.56, below that gap on purpose, because my
+rule is that when retrieval misses, the system should honestly say no. Q2
+(0.604) is the one question whose answer isn't in its top five chunks, so 0.56
+refuses it, while Q4 (0.517), whose answer was retrieved, still gets through;
+0.56 is the middle of those two.
 
 ---
 
