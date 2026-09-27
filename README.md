@@ -203,46 +203,93 @@ than rewording after the count.
 
 ## Run Log — Before
 
-<!-- Your five criteria, three runs each. `python run_eval.py --label before`
-     runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
-     writes it all into results/ for you. Targets come from criteria.md; the
-     verdict column is your call.
-
-     Criterion 3 is measured in one deterministic pass rather than three, so
-     the same number goes in all three run columns. That's correct, not lazy.
-
-     Milestone 1. -->
+`python run_eval.py --label before`: five questions, three runs each, caching
+off, cutoff 0.56, top-k 5. The run log is
+`results/run_2026-09-27_0143_before.md` (`run_eval.py::main`, criterion 5
+scored by `scorer.py::judge`), and this table was added up from it by
+`summarize_run.py::summarize` into `results/run_2026-09-27_0143_before_criteria.md`.
+Criteria 1, 3 and 4 are deterministic, so the same number fills every run
+column. Criterion 4 is town-guide chunks · cross-cutting chunks.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 | --- | --- | --- | --- | --- | --- |
-| 1. Retrieved chunk contains the answer | 4 of 5 | | | | |
-| 2. Every answer names a source | 5 of 5 | | | | |
-| 3. Gate stops out-of-corpus questions | 4 of 5 | | | | |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | **MISSED** |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. Chunks can answer a question on their own | 60 of 72 and 15 of 22 | 63 · 21 | 63 · 21 | 63 · 21 | MET |
+| 5. Answers are factual, precise and concise | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
 
-<!-- Underneath, paste the REAL output for each criterion from one of your
-     runs — the actual text your system produced, not a description of it.
-     Name the file and function that produced it. -->
+**Criteria 1, 2 and 5 — the five answers from run 1**, copied unedited from
+the run log. Produced by `run_eval.py::run_once`: `gate.py::check` refused
+Q2, and `generate.py::answer_from_chunks` wrote the other four. Runs 2 and 3
+are in the log.
+
+```text
+Q1  Which day of the week is the Givens Mill tearoom closed?
+The Givens Mill tearoom is closed on Tuesdays, according to guide_givens_mill.md.
+
+Q2  How far ahead should I book train tickets to get the cheapest fare?  (best distance 0.604, refused by the gate)
+I don't have enough information about that.
+
+Q3  When does the Halden Bay coastal path get closed?
+The Halden Bay coastal path gets closed when there is high wind, as it is genuinely dangerous in those conditions (`guide_halden_bay.md` and `guide_walking.md`).
+
+Q4  Which town is the best place to visit in winter?
+Marchwood is the one place in the region that works in winter, since almost everything is indoors and nothing closes seasonally (guide_marchwood.md). Additionally, Thornby Wells is noted as the region's most reliable winter destination after Marchwood (guide_thornby_wells.md).
+
+Q5  Where is the nearest full hospital?
+According to `guide_accessibility.md`, the nearest full hospital is in Marchwood. (However, the other documents—`guide_givens_mill.md`, `guide_kestrelford.md`, `guide_halden_bay.md`, and `guide_marchwood.md`—state that the nearest full hospital is in Brightwater.)
+```
+
+**Criterion 1 — what retrieval returned for Q2**, the one question whose top
+five don't contain the answer. Produced by `store.py::search`, via
+`python app.py retrieve`; full output in `results/milestone4_retrieval.txt`.
+The chunk that answers it, `guide_regional_transport.md#0`, ranks 11th at
+0.731.
+
+```text
+#   distance   source                           preview
+----------------------------------------------------------------------------------------------------
+1   0.6042     guide_marchwood.md               Marchwood > Getting around: A tram network of four l...
+2   0.6252     guide_kestrelford.md             Kestrelford > When to go: Late spring and early autu...
+3   0.6877     guide_eating.md                  Eating across the region > Markets: Kestrelford's Sa...
+4   0.6940     guide_marchwood.md               Marchwood > Getting there: Every railway line in the...
+5   0.6952     guide_givens_mill.md             Givens Mill > When to go: The mill runs March to Nov...
+```
+
+**Criterion 3 — the gate on the out-of-scope questions**, from the run log.
+Produced by `run_eval.py::check_out_of_scope`, cutoff 0.56. Refused 5 of 5.
+
+| Out-of-scope question | Best distance | Gate |
+| --- | --- | --- |
+| What is the capital of Mongolia? | 0.818 | refused |
+| How do I change the oil in a diesel engine? | 0.884 | refused |
+| Who won the 1994 World Cup? | 0.968 | refused |
+| What is the recommended dosage of ibuprofen for a headache? | 0.843 | refused |
+| How do I write a for loop in Rust? | 0.852 | refused |
+
+**Criterion 4 — the chunk review.** Produced by `review_chunks.py::count`
+(`python review_chunks.py --count`); every mark and reason is in
+`results/chunk_review.md`.
+
+```text
+Part A (town guides): 63 of 72 pass at 4+ of 5
+Part B (cross-cutting guides): 21 of 22 pass at 4+ of 5
+Spot-check: you agreed with Claude on 8 of 10
+```
 
 ## Verdicts
 
-<!-- MET or MISSED for each of the five, against the target you wrote last
-     unit — not a new one. Plus a sentence on how you decided. That sentence
-     matters most where it was close.
-
-     If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
-     The target has to hold, not show up occasionally.
-
-     Milestone 2. -->
+Against the targets I wrote in unit 1, unchanged. A criterion is met only if
+the target holds in every run.
 
 | # | Criterion | Verdict | How I decided |
 | --- | --- | --- | --- |
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | Retrieved chunk contains the answer | MET | 4 of 5 in every run, exactly the target. The one miss is Q2 every time — the chunk that answers it ranks 11th, outside the top five — so there's no margin: one more miss in any run would make this a miss. |
+| 2 | Every answer names a source | **MISSED** | 4 of 5 in every run against 5 of 5. The only answer with no source is Q2's: the gate refuses it at my 0.56 cutoff, and that refusal is a fixed sentence that names no file. Retrieval and the gate are deterministic, so as the system stands this can't reach 5 of 5. |
+| 3 | Gate stops out-of-corpus questions | MET | 5 of 5 in every run, above the 4 of 5 target. But the five questions were never close: their best distances ran 0.818 and up against a 0.56 cutoff, so this barely tested the gate. On-topic questions the corpus can't answer (0.37–0.59 in my Milestone 4 probes) would all get past it. |
+| 4 | Chunks can answer a question on their own | MET | 63 of 72 town-guide chunks and 21 of 22 cross-cutting chunks pass, against 60 and 15; chunking is deterministic, so it's the same in every run. The nine failures are the repeated "Practical notes" paragraph. I agreed with 8 of Claude's 10 audited marks, and the two I disagreed on showed check 1 can be read two ways. |
+| 5 | Answers are factual, precise and concise | MET | 4 of 5 in every run, exactly the target. Again the only failure is Q2, whose refusal can't contain "a week ahead". The other four were factual and named only allowed files, and the longest was 46 words of a 160 limit, so "concise" was never really tested. |
 
 ## Diagnoses
 
