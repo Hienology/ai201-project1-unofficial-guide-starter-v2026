@@ -124,7 +124,7 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
 
     Every city_guides document is a `#` title followed by labelled sections
     ("Getting there", "Eat and drink", "When to go"), and each section is one
-    self-contained idea of roughly 250–700 characters. The headings already
+    self-contained idea of 158 to 691 characters. The headings already
     mark where one thought ends and the next begins, so they are the cut.
 
     Each chunk starts with "{title} > {heading}: ". A section read on its own

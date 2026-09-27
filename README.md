@@ -21,11 +21,16 @@
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
-
-     Milestone 5. -->
+The Unofficial Guide answers travel questions about a fictional region using
+only fourteen guides from the `city_guides` corpus: nine town guides (Halden
+Bay, Brightwater, Marchwood and others) and five that cut across all of them
+(eating, walking, regional transport, seasons, accessibility). It handles
+specific, practical questions — when somewhere is open or closed, how to get
+there without a car, where to eat or stay, when to visit, how easy a town is to
+get around. For each question it finds the closest guide sections, refuses
+with "I don't have enough information about that" when nothing is close
+enough, and otherwise has Gemini answer from those sections alone, naming the
+files it used.
 
 ## Test Questions and Answer Key
 
@@ -48,18 +53,35 @@ answer anywhere in the corpus. The correct result for each is the refusal:
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size:** one `##` section per chunk, not a character count — 183 to 758
+characters, a median of 47 words. A section over 1,000 characters would be cut
+into windows, but no section in this corpus is that long (the longest is 691).
 
-<!-- What about YOUR documents made you pick these numbers? Short posts and
-     long sectioned guides don't want the same chunking, and "800 seemed
-     reasonable" earns nothing. Point at something you noticed when you read
-     the documents in Milestone 1.
+**Overlap:** none between sections. Instead, every chunk starts with
+`{guide title} > {section heading}:`. (The 1,000-character windows would
+overlap by 100, but they never fire here.)
 
-     If you changed your mind partway through, say so and say why. That's worth
-     more than pretending you got it right first time.
+Every guide is real markdown: a `#` title, then `##` sections such as "Getting
+there", "Eat and drink" and "When to go", and each section is one
+self-contained idea of 158 to 691 characters. The headings already mark
+where one idea ends and the next begins, so they are the cut.
 
-     Milestone 3. -->
+The starter's fixed 800-character chunker ignored them. It made 51 chunks that
+ran across section boundaries and started and ended mid-word — one began
+"urs" (the tail of "Opening hours"), another ended "stop serving at 9p", and
+the shortest was just "d Sundays and after 5pm." Splitting on headings makes
+94 chunks (84 sections plus 10 intro paragraphs) with no text lost.
+
+The prefix does the job overlap usually does. A section read on its own often
+doesn't say which town it's about — "Buses run four times a day" — and the
+prefix puts that back without copying text from the neighbouring section.
+
+The known weak spot is the five cross-cutting guides, where one section puts
+several towns under one theme ("Difficult" covers four towns). Splitting on the
+heading is still right, but those chunks are broader, which is why criterion 4
+sets a lower bar for them (15 of 22) than for the town guides (60 of 72). The
+function is `chunker.py::split_documents`; the starter's version is kept as
+`chunker.py::fallback_split` for comparison.
 
 ## Sample Chunks
 
