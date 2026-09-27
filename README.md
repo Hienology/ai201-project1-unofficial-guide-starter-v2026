@@ -98,14 +98,20 @@ Pellew Sands > When to go: June and September for the beach without the crowds. 
 
 ## Sample Answer
 
-<!-- One complete question and answer, pasted as text, with the source line
-     visible. Milestone 4. -->
+Produced by `python app.py ask "Where is the nearest full hospital?"` at cutoff
+0.56, copied unedited. The full run, including the exact prompt the model was
+sent (`--show-prompt`), is in `results/milestone4_sample_answer.txt`.
 
-**Question:**
+**Question:** Where is the nearest full hospital?
 
 **Answer:**
 
 ```
+  (best distance 0.346, cutoff 0.56)
+
+Based on `guide_accessibility.md`, the nearest full hospital is in Marchwood. (However, the town-specific guides `guide_givens_mill.md`, `guide_kestrelford.md`, `guide_halden_bay.md`, and `guide_marchwood.md` state that the nearest full hospital is in Brightwater.)
+
+Sources retrieved: guide_accessibility.md, guide_givens_mill.md, guide_halden_bay.md, guide_kestrelford.md, guide_marchwood.md
 ```
 
 **My relevance cutoff:** 0.56 (`THRESHOLD` in `config.py`)
