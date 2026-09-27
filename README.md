@@ -410,7 +410,21 @@ Based on the provided documents, there is no mention of which town is the "best"
 ```text
 Part A (town guides): 63 of 72 pass at 4+ of 5
 Part B (cross-cutting guides): 42 of 43 pass at 4+ of 5
+Spot-check: you agreed with Claude on 8 of 10
 ```
+
+The new spot-check (`results/chunk_spotcheck_after.md`, same seed) drew ten
+chunks from the 115. I disagreed on S3, a copy of the repeated "Practical
+notes" paragraph, for the same reason as the first time, and on S5, the
+accessibility guide's intro, which doesn't suit an Overview — the same chunk
+and the same marks I agreed with in the first spot-check.
+
+`summarize_run.py` flagged all three Q4 answers for a person to read, since
+none contains "Marchwood" and none is a refusal. I read them: they're honest
+about what they were given — `guide_seasons.md` compares no towns, so nothing
+in it can say which one is best — but they aren't the answer. Thornby Wells is
+the region's most reliable winter destination "after Marchwood", so Marchwood
+is first. The scorer's fails stand.
 
 **Did it help?** Yes, for the criterion it was aimed at — and it cost another
 question. Criterion 2 went from 4 of 5 in every run to 5 of 5 in every run:
