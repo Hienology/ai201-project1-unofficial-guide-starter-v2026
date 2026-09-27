@@ -22,9 +22,8 @@ pipeline earns credit; *"80% seemed reasonable"* does not.
 For at least 4 of my 5 test questions, the retrieved chunks include one that
 contains the answer.
 
-**Why this target:**
-<!-- e.g. "One of my questions is about a topic only two documents mention, so
-     I expect that one to be hard." -->
+**Why this target:** 3 of 5 would only be average; I want good, and 4 of 5 is
+the minimum I'd call good.
 
 ---
 
@@ -32,9 +31,10 @@ contains the answer.
 
 Every answer the system produces names at least one source document.
 
-**Why this target:**
-<!-- Why all five and not four? What about your setup makes that achievable —
-     or what would have to go wrong for it not to be? -->
+**Why this target:** Naming the source has to happen every time, not four
+times in five. The person reading an answer is either not going to search
+fourteen guides to check it, or doesn't know where to look — an answer with no
+source leaves them nothing to check it against.
 
 ---
 
@@ -75,9 +75,12 @@ Claude's marks for checks 1 and 3 are audited: I check ten chunks drawn at
 random (seed 201) and record how many I agree with in
 `results/chunk_spotcheck.md`. The full sheet is `results/chunk_review.md`.
 
-**Why this target:**
-<!-- Why 60 and 15, and not higher or lower? And why a lower bar for the
-     cross-cutting guides than for the town guides? -->
+**Why this target:** I think of the system as a student doing a
+reading-comprehension exercise. Work that stays inside one section of one
+passage — a town guide's chunk, one town and one topic — needs no connecting,
+verifying or analysing, so it's the easier task and I expect the higher score
+(60 of 72). A cross-cutting chunk puts several towns under one theme, which is
+the more complex, demanding task, so I expect a lower score there (15 of 22).
 
 ---
 
@@ -107,11 +110,12 @@ claims are separate facts if one could be true while the other is false. The
 facts each question needs were counted from the answer key in `README.md`
 before any answers existed.
 
-**Why this target:**
-<!-- Why 4 of 5, and why 80 words per fact rather than tighter or looser?
-     Worth knowing: the prompt asks for "two or three sentences", and the
-     one answer seen so far (a baseline question, not one of these five)
-     carried about 4 facts in 56 words. -->
+**Why this target:** 4 of 5 for the same reason as criterion 1: 3 of 5 would
+only be average, and 4 is the minimum I'd call good. The chunks an answer is
+built from run to about 50–70 words, so 80 words is generous for a one-fact
+answer, and 160 covers the ones that need two. Generous on purpose: now and
+then the sentence that holds the answer is long and dense with information,
+and a correct answer shouldn't fail for quoting it.
 
 ---
 
