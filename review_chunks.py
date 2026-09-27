@@ -125,7 +125,7 @@ def load_judgments(chunks) -> dict[str, dict[str, tuple[str, str]]]:
     """Claude's marks for checks 1 and 3, kept only where the chunk is unchanged."""
     if not JUDGMENTS.exists():
         return {}
-    stored = json.loads(JUDGMENTS.read_text(encoding="utf-8"))
+    stored = json.loads(JUDGMENTS.read_text(encoding="utf-8"))["marks"]
     current = {c.label: fingerprint(c.text) for c in chunks}
     kept, stale = {}, []
     for label, entry in stored.items():

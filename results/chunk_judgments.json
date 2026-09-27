@@ -1,0 +1,1044 @@
+{
+  "marked_by": "Claude (claude-opus-5-5), 2026-09-26, reading each chunk's full text",
+  "rubric": {
+    "1": "Answerable alone — Using only this chunk, someone could give a factually correct answer to a question about its topic (for a chunk covering several towns: a question about any one of them).",
+    "3": "One line of ideas — Every sentence serves the topic named in its heading."
+  },
+  "how_marked": "Check 1 read literally: Y if any natural question on the chunk's topic can be answered correctly from it alone, judged against the whole corpus. Check 3 read strictly: N if any sentence belongs under a different heading.",
+  "marks": {
+    "guide_accessibility.md#0": {
+      "fingerprint": "12009b15ed",
+      "1": [
+        "N",
+        "no facts about any place — it describes the guide's own approach, so there is nothing to answer a question from"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#1": {
+      "fingerprint": "5d423f456f",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#2": {
+      "fingerprint": "580efad610",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#3": {
+      "fingerprint": "418a58b49b",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#4": {
+      "fingerprint": "cafd0cfb9f",
+      "1": [
+        "Y",
+        "Y; its hospital line (Marchwood) contradicts the Practical notes in all nine town guides (Brightwater)"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#0": {
+      "fingerprint": "2e69542f6e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#1": {
+      "fingerprint": "c53a59bd4f",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#2": {
+      "fingerprint": "dba19c79b2",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#3": {
+      "fingerprint": "632dd15e00",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#4": {
+      "fingerprint": "618e2fa325",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#5": {
+      "fingerprint": "663c214bae",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#6": {
+      "fingerprint": "9e6bc0d59a",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_brightwater.md#7": {
+      "fingerprint": "bccaa134ff",
+      "1": [
+        "Y",
+        "Y on cash and mobile coverage; its hospital line contradicts guide_accessibility.md (Marchwood), and here it is Brightwater's own guide pointing to Brightwater"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#0": {
+      "fingerprint": "c918361a77",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#1": {
+      "fingerprint": "8abb99b3db",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#2": {
+      "fingerprint": "1e154528be",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#3": {
+      "fingerprint": "dfc0f43854",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#4": {
+      "fingerprint": "e6fe3a54d8",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#5": {
+      "fingerprint": "2336c85e36",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#6": {
+      "fingerprint": "dfb9e8faeb",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_corry_vale.md#7": {
+      "fingerprint": "a40cd50eba",
+      "1": [
+        "Y",
+        "Y on cash; the rest doesn't fit Corry Vale — it has no market or centre, guide_accessibility.md says coverage is absent in parts of it, and names Marchwood for the hospital"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#0": {
+      "fingerprint": "047e8135b2",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#1": {
+      "fingerprint": "38350acc08",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#2": {
+      "fingerprint": "d3c3bc3651",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#3": {
+      "fingerprint": "a9824aea42",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#4": {
+      "fingerprint": "3da9200d24",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#0": {
+      "fingerprint": "4f9e2eb0e0",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#1": {
+      "fingerprint": "0708e54a8e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#2": {
+      "fingerprint": "3a83357171",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#3": {
+      "fingerprint": "c3517b6dc0",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#4": {
+      "fingerprint": "6b5b7117e8",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#5": {
+      "fingerprint": "58dabad43d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#6": {
+      "fingerprint": "720b4e6c1b",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_elder_ness.md#7": {
+      "fingerprint": "dde79ff7e0",
+      "1": [
+        "Y",
+        "Y on cash; Elder Ness has no market or centre (it is one street), and the hospital line contradicts guide_accessibility.md (Marchwood)"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#0": {
+      "fingerprint": "7a4340d780",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#1": {
+      "fingerprint": "16802a5b4d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#2": {
+      "fingerprint": "c1e18165c6",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#3": {
+      "fingerprint": "c5b387fd4e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#4": {
+      "fingerprint": "0787ab326e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#5": {
+      "fingerprint": "9f45d8f03c",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#6": {
+      "fingerprint": "382a27e583",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_givens_mill.md#7": {
+      "fingerprint": "a478eabda4",
+      "1": [
+        "Y",
+        "Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#0": {
+      "fingerprint": "788951608d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#1": {
+      "fingerprint": "5d5b709422",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#2": {
+      "fingerprint": "37cc1ef736",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#3": {
+      "fingerprint": "ac63fdd530",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#4": {
+      "fingerprint": "ba287420db",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#5": {
+      "fingerprint": "831430cfe5",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#6": {
+      "fingerprint": "610cd50f65",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_halden_bay.md#7": {
+      "fingerprint": "61482b98eb",
+      "1": [
+        "Y",
+        "Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#0": {
+      "fingerprint": "39faa75b72",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#1": {
+      "fingerprint": "252f497d68",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#2": {
+      "fingerprint": "e82f7efbfb",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#3": {
+      "fingerprint": "d1f76e9841",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#4": {
+      "fingerprint": "f41271eb47",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#5": {
+      "fingerprint": "7d9b869ef8",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#6": {
+      "fingerprint": "10dce34b3d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_kestrelford.md#7": {
+      "fingerprint": "b35aa07a84",
+      "1": [
+        "Y",
+        "Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#0": {
+      "fingerprint": "a052fa2c80",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#1": {
+      "fingerprint": "c4ea11837e",
+      "1": [
+        "Y",
+        "Y; but 'trains to Brightwater every 40 minutes until 11pm' conflicts with the eleven a day in guide_brightwater.md and guide_regional_transport.md"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#2": {
+      "fingerprint": "450df005cb",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#3": {
+      "fingerprint": "7281bde742",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#4": {
+      "fingerprint": "53895f2967",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#5": {
+      "fingerprint": "731288caa6",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#6": {
+      "fingerprint": "f53a89f15b",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_marchwood.md#7": {
+      "fingerprint": "d30f86c6bd",
+      "1": [
+        "Y",
+        "Y on cash and coverage; the hospital line sends Marchwood to Brightwater, but guide_accessibility.md says the nearest full hospital is in Marchwood itself"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#0": {
+      "fingerprint": "3aa3814157",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#1": {
+      "fingerprint": "165238d8eb",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#2": {
+      "fingerprint": "130c2d1271",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#3": {
+      "fingerprint": "ed3a05606d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#4": {
+      "fingerprint": "6a2f0e2960",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#5": {
+      "fingerprint": "64ab2ee45a",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#6": {
+      "fingerprint": "ea1c55e42c",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_pellew_sands.md#7": {
+      "fingerprint": "a76ca84b8d",
+      "1": [
+        "Y",
+        "Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#0": {
+      "fingerprint": "1461a5840e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#1": {
+      "fingerprint": "daf6bbf74a",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#2": {
+      "fingerprint": "da7d9fcb7b",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#3": {
+      "fingerprint": "0383e0e61c",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#0": {
+      "fingerprint": "c2b20bd11b",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#1": {
+      "fingerprint": "3b8318832f",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#2": {
+      "fingerprint": "18554ae98c",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#3": {
+      "fingerprint": "f5e4d6d1a6",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#0": {
+      "fingerprint": "cabcac1654",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#1": {
+      "fingerprint": "2f801fe3cc",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#2": {
+      "fingerprint": "386ab865e7",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#3": {
+      "fingerprint": "9e455e61c2",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#4": {
+      "fingerprint": "616ff137c4",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#5": {
+      "fingerprint": "08a18642a1",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#6": {
+      "fingerprint": "3095adcdf0",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_thornby_wells.md#7": {
+      "fingerprint": "73beae4854",
+      "1": [
+        "Y",
+        "Y on cash and mobile coverage; its hospital line (nearest full hospital in Brightwater) contradicts guide_accessibility.md, which says Marchwood"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#0": {
+      "fingerprint": "d089502fa2",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#1": {
+      "fingerprint": "aef6a00343",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "N",
+        "the Givens Mill–Brightwater walk is 'easy underfoot' along a river, not a walk with hills, and it already appears under 'Easy, on good surfaces'"
+      ]
+    },
+    "guide_walking.md#2": {
+      "fingerprint": "b454115bfe",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        "Y; the road-flooding sentence is about reaching the Elder Ness walk rather than the walk itself, but it is the tide-dependence the heading names"
+      ]
+    },
+    "guide_walking.md#3": {
+      "fingerprint": "5296eebc15",
+      "1": [
+        "Y",
+        "Y on the Brightwater winter advice; the Kestrelford line conflicts with guide_kestrelford.md, and 'not gritted above the second village' is Corry Vale's road in guide_corry_vale.md"
+      ],
+      "3": [
+        "N",
+        "the last paragraph is about the Kestrelford approach road being impassable to traffic in snow, not about walking"
+      ]
+    }
+  }
+}
