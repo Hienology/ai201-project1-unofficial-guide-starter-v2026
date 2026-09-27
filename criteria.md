@@ -57,14 +57,23 @@ in at least 4 of 5 tries.
 
 ## 4. Chunks can answer a question on their own
 
-Every chunk `chunker.py::split_documents` produces is marked Y or N by hand in
-`results/chunk_review.md` (written and counted by `review_chunks.py`). **Y**
-means that, using only that chunk, someone could give a factually correct
-answer to a question about its topic — for a chunk covering several towns, a
-question about any one of them.
+Every chunk `chunker.py::split_documents` produces is scored on five yes/no
+checks, and passes at **4 or more of 5**:
+
+| # | Check | Marked by |
+|---|---|---|
+| 1 | **Answerable alone** — using only this chunk, someone could give a factually correct answer to a question about its topic (for a chunk covering several towns: a question about any one of them) | Claude, with a reason for every N |
+| 2 | **Whole unit** — it starts with "Guide > Section:" and ends at the end of a sentence | `review_chunks.py` |
+| 3 | **One line of ideas** — every sentence serves the topic named in its heading | Claude, with a reason for every N |
+| 4 | **Concrete** — it contains a digit, a number written as a word (two to twenty, thirty, forty, fifty, hundred, thousand), a day or a month | `review_chunks.py` |
+| 5 | **Not repeated** — its text is not a near-copy (90% or more the same) of another chunk's | `review_chunks.py` |
 
 At least **60 of the 72** town-guide chunks and at least **15 of the 22**
-cross-cutting-guide chunks are marked Y. Both parts have to hold.
+cross-cutting-guide chunks pass. Both parts have to hold.
+
+Claude's marks for checks 1 and 3 are audited: I check ten chunks drawn at
+random (seed 201) and record how many I agree with in
+`results/chunk_spotcheck.md`. The full sheet is `results/chunk_review.md`.
 
 **Why this target:**
 <!-- Why 60 and 15, and not higher or lower? And why a lower bar for the
