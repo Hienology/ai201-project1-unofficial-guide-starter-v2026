@@ -5,11 +5,11 @@ strategy              chunks  median words    Q1  Q2  Q3  Q4  Q5    in top 5   p
 whole guide               14           372     1   6   1   1   1       4 of 5       2 of 5                  0.841
 fixed 800 (starter)       51           137     2  12   3   1   6       3 of 5       4 of 5                  0.829
 fixed 400                 93            70     2   8   1   5   9       3 of 5       5 of 5                  0.799
-## section (in use)       94            52     1  11   2   3   1       4 of 5       4 of 5                  0.818
+## section                94            52     1  11   2   3   1       4 of 5       4 of 5                  0.818
 paragraph                115            48     1   1   1   6   1       4 of 5       5 of 5                  0.818
 sentence                 317            21     2   1   1   1   1       5 of 5       5 of 5                  0.772
 
-Top 6 for Q2 with ## section (in use) chunks:
+Top 6 for Q2 with ## section chunks:
   1   0.604  Marchwood > Getting around: A tram network of four lines, running every 8 minutes on wee
   2   0.625  Kestrelford > When to go: Late spring and early autumn. The Saturday market runs year-ro
   3   0.688  Eating across the region > Markets: Kestrelford's Saturday market has run since the 1400
@@ -17,7 +17,7 @@ Top 6 for Q2 with ## section (in use) chunks:
   5   0.695  Givens Mill > When to go: The mill runs March to November and is closed entirely in wint
   6   0.699  Pellew Sands > Getting around: The seafront runs two miles and is flat the whole way. Ev
 
-Top 6 for Q4 with ## section (in use) chunks:
+Top 6 for Q4 with ## section chunks:
   1   0.517  Walking in the region > Seasonal notes: Add four minutes to any Brightwater walking esti
   2   0.554  Halden Bay > When to go: June and September are the sweet spot. July and August are busy
   3 ✓ 0.575  Thornby Wells > When to go: Year-round, genuinely. The gardens are best in May and June.

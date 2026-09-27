@@ -118,7 +118,32 @@ def _windows(text: str, size: int, overlap: int) -> list[str]:
         start += size - overlap
 
 
-def split_documents(documents: list[Document]) -> list[Chunk]:
+def _chunk(documents: list[Document], pieces, produced_by: str) -> list[Chunk]:
+    """Cut each section into `pieces(text)`, each prefixed "{title} > {heading}: "."""
+    chunks: list[Chunk] = []
+    for doc in documents:
+        title, sections = _sections(doc)
+        index = 0
+        for heading, text in sections:
+            for piece in pieces(text):
+                chunks.append(
+                    Chunk(
+                        text=f"{title} > {heading}: {piece}",
+                        source=doc.source,
+                        index=index,
+                        produced_by=produced_by,
+                    )
+                )
+                index += 1
+
+    return chunks
+
+
+def _whole_section(text: str) -> list[str]:
+    return _windows(text, config.SECTION_MAX_CHARS, config.SECTION_OVERLAP)
+
+
+def split_by_section(documents: list[Document]) -> list[Chunk]:
     """
     Split each guide on its `##` headings: one section, one chunk.
 
@@ -135,23 +160,12 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
     A section longer than config.SECTION_MAX_CHARS is windowed with
     config.SECTION_OVERLAP so no chunk carries several unrelated ideas.
     """
-    chunks: list[Chunk] = []
-    for doc in documents:
-        title, sections = _sections(doc)
-        index = 0
-        for heading, text in sections:
-            for piece in _windows(text, config.SECTION_MAX_CHARS, config.SECTION_OVERLAP):
-                chunks.append(
-                    Chunk(
-                        text=f"{title} > {heading}: {piece}",
-                        source=doc.source,
-                        index=index,
-                        produced_by="chunker.py::split_documents",
-                    )
-                )
-                index += 1
+    return _chunk(documents, _whole_section, "chunker.py::split_by_section")
 
-    return chunks
+
+def split_documents(documents: list[Document]) -> list[Chunk]:
+    """The chunker the pipeline uses. For now, one section per chunk."""
+    return _chunk(documents, _whole_section, "chunker.py::split_documents")
 
 
 def describe(chunks: list[Chunk]) -> str:

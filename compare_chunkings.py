@@ -27,7 +27,7 @@ import numpy as np
 import config
 import questions as qs
 import scorer
-from chunker import _sections, fallback_split, split_documents
+from chunker import _sections, fallback_split, split_by_section
 from ingest import load_documents
 from store import embed
 
@@ -65,7 +65,7 @@ def report() -> None:
         "whole guide": [d.text for d in docs],
         "fixed 800 (starter)": [c.text for c in fallback_split(docs, 800, 120)],
         "fixed 400": [c.text for c in fallback_split(docs, 400, 60)],
-        "## section (in use)": [c.text for c in split_documents(docs)],
+        "## section": [c.text for c in split_by_section(docs)],
         "paragraph": paragraph_chunks(docs),
         "sentence": sentence_chunks(docs),
     }
@@ -93,7 +93,7 @@ def report() -> None:
               + f"   {in_top:>5} of 5   {passed:>5} of 5   {distances[len(items):].min():>20.3f}")
         details[name] = (texts, distances)
 
-    for name in ("## section (in use)", "paragraph"):
+    for name in ("## section", "paragraph"):
         texts, distances = details[name]
         for i in (1, 3):  # Q2 and Q4
             print(f"\nTop {k + 1} for Q{i + 1} with {name} chunks:")

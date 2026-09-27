@@ -16,17 +16,22 @@ changes the system:
   C  retrieval  — where would a keyword ranking (BM25) put the answer chunk?
 
 No model calls. The checks are ordered by pipeline stage, not by likelihood.
+
+It diagnoses the unit 1 system — one chunk per `##` section, from
+`chunker.py::split_by_section` — and ranks those chunks in memory rather than
+through the index, so the evidence still reproduces after unit 2 re-chunks.
 """
 
 import io
 import math
 import re
 from contextlib import redirect_stdout
+from types import SimpleNamespace
 
 import config
-from chunker import split_documents
+from chunker import split_by_section
 from ingest import load_documents
-from store import embed, search
+from store import embed
 
 QUESTION = "How far ahead should I book train tickets to get the cheapest fare?"
 ANSWER_LABEL = "guide_regional_transport.md#0"
@@ -45,6 +50,17 @@ def distance(a: str, b: str) -> float:
     return 1 - dot / (math.sqrt(sum(x * x for x in va)) * math.sqrt(sum(y * y for y in vb)))
 
 
+def search(question: str, chunks, vectors) -> list:
+    """Every chunk nearest-first, like `store.search`, but over `chunks` in memory."""
+    (q,) = embed([question])
+    qn = math.sqrt(sum(x * x for x in q))
+    scored = []
+    for c, v in zip(chunks, vectors):
+        cos = sum(x * y for x, y in zip(q, v)) / (qn * math.sqrt(sum(y * y for y in v)))
+        scored.append(SimpleNamespace(label=c.label, text=c.text, distance=1 - cos))
+    return sorted(scored, key=lambda r: r.distance)
+
+
 def rank_of(label: str, results) -> tuple[int, float]:
     for n, r in enumerate(results, 1):
         if r.label == label:
@@ -53,9 +69,10 @@ def rank_of(label: str, results) -> tuple[int, float]:
 
 
 def report() -> None:
-    chunks = split_documents(load_documents())
+    chunks = split_by_section(load_documents())
+    vectors = embed([c.text for c in chunks])
     answer = next(c for c in chunks if c.label == ANSWER_LABEL)
-    ranked = search(QUESTION, top_k=len(chunks))
+    ranked = search(QUESTION, chunks, vectors)
     top = ranked[0]
     rank, dist = rank_of(ANSWER_LABEL, ranked)
 
@@ -79,7 +96,7 @@ def report() -> None:
         print(f"    {w:<9} answer chunk: {'yes' if w in a_words else 'no ':<4} top hit: {'yes' if w in t_words else 'no'}")
     print("    (close forms: the answer chunk has 'booked' and 'cheaper'; "
           "the top hit has 'ticket' and 'fares')")
-    r2, d2 = rank_of(ANSWER_LABEL, search(REWORDED, top_k=len(chunks)))
+    r2, d2 = rank_of(ANSWER_LABEL, search(REWORDED, chunks, vectors))
     print(f"    reworded in the chunk's own terms: \"{REWORDED}\"")
     print(f"    → answer chunk ranks {r2} at {d2:.3f} (was {rank}, {dist:.3f})\n")
 
