@@ -1,0 +1,31 @@
+Unit 1 system: 94 section chunks, top 5, gate cutoff 0.56.
+
+B · HYBRID SEARCH — top 5 by reciprocal rank fusion of meaning and BM25 ranks;
+    the gate still judges the best meaning-based distance among those five.
+                       answer in top 5             gate (best distance)
+                 today          hybrid            today          hybrid
+    Q1             yes             yes     pass (0.379)    pass (0.379)
+    Q2              no             yes   refused (0.604) refused (0.625)
+    Q3             yes             yes     pass (0.292)    pass (0.293)
+    Q4             yes             yes     pass (0.517)    pass (0.517)
+    Q5             yes             yes     pass (0.346)    pass (0.346)
+    O1               —               —   refused (0.818) refused (0.848)
+    O2               —               —   refused (0.884) refused (0.913)
+    O3               —               —   refused (0.968) refused (1.018)
+    O4               —               —   refused (0.843) refused (0.843)
+    O5               —               —   refused (0.852) refused (0.852)
+
+C · HELPFUL REFUSAL — for each question the gate refuses today, the files a
+    refusal would point to (the 3 closest chunks), and whether any holds the answer:
+    Q2  How far ahead should I book train tickets to get the cheapest fare?
+        would point to: guide_marchwood.md, guide_kestrelford.md, guide_eating.md — answer file (guide_regional_transport.md) among them: no
+    O1  What is the capital of Mongolia?
+        would point to: guide_corry_vale.md, guide_givens_mill.md, guide_accessibility.md — no answer exists in the corpus
+    O2  How do I change the oil in a diesel engine?
+        would point to: guide_givens_mill.md, guide_brightwater.md, guide_walking.md — no answer exists in the corpus
+    O3  Who won the 1994 World Cup?
+        would point to: guide_givens_mill.md, guide_thornby_wells.md, guide_accessibility.md — no answer exists in the corpus
+    O4  What is the recommended dosage of ibuprofen for a headache?
+        would point to: guide_elder_ness.md, guide_givens_mill.md, guide_thornby_wells.md — no answer exists in the corpus
+    O5  How do I write a for loop in Rust?
+        would point to: guide_givens_mill.md, guide_thornby_wells.md, guide_corry_vale.md — no answer exists in the corpus
