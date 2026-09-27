@@ -293,23 +293,43 @@ the target holds in every run.
 
 ## Diagnoses
 
-<!-- For each miss: which stage caused it, and how. The stage alone isn't
-     enough — you need the mechanism.
+**Criterion 2 (missed) — stage: chunking.** Q2 asks how far ahead to book
+train tickets. The answer is in `guide_regional_transport.md` under
+`## The railway`, but that one heading holds two ideas: a paragraph on the
+line and its timetable, then a paragraph on ticket prices. My chunker cuts on
+`##` headings, so both paragraphs became one chunk with one embedding, and the
+timetable half pulls it away from a ticket question. The chunk as indexed is
+0.731 from Q2; the tickets paragraph on its own would be 0.545, the timetable
+paragraph 0.775. So the chunk ranks 11th, and only the top five reach the
+model (`TOP_K = 5`, the starter's default). The best distance left is the
+Marchwood tram-ticket chunk at 0.604, the 0.56 gate refuses the question, and
+the gate's refusal names no file — which is the criterion 2 miss.
 
-     Not a diagnosis: "Question 3 didn't work."
-     A diagnosis:     "Question 3 asks about laundry costs. The answer is in
-                       one sentence that got split across two chunks, so
-                       neither chunk on its own contains it."
+It's before generation, not in it: the answer isn't in any of Q2's five
+retrieved chunks, so the model never had a chance. My chunking assumption —
+one heading, one idea — holds for most of the 84 sections, and this one breaks
+it. It even passed criterion 4: the tickets paragraph belongs under "The
+railway", so the chunk is coherent by its heading while still being hard to
+find for a narrow question.
 
-     The five stages: loading → chunking → embedding → retrieval → generation.
+**The pattern.** This is one problem, not three. The same Q2 failure is the
+only miss behind criteria 1 and 5 as well, which is why both sit exactly on
+target with no margin.
 
-     Look for a pattern. If three misses all ask about numbers, that's one
-     problem, not three.
+**Evidence.**
 
-     Missed nothing? Say so, then say honestly whether your targets were set
-     low, and which one you'd tighten and to what.
-
-     Milestone 3. -->
+- `results/diagnosis_q2.txt` (`diagnose_q2.py`) — one check per stage. The
+  tickets paragraph alone is 0.545 against 0.731 for the whole chunk
+  (chunking). Rewording Q2 in the chunk's own terms moved it to 8th but further
+  away, 0.761, so wording alone doesn't explain it (embedding). A keyword
+  ranking (BM25) puts the chunk 2nd instead of 11th (retrieval) — a second
+  route to the same chunk, not the cause.
+- `results/chunking_comparison.txt` (`compare_chunkings.py`) — six ways of
+  cutting the same guides, scored the same way. Cutting by paragraph moves Q2
+  from 11th to 1st at 0.545, under the cutoff; but it also moves Q4's answer
+  from 3rd to 6th, because the split cross-cutting paragraphs about winter get
+  sharper and crowd it out. No chunk size wins everywhere: coarser chunks blur,
+  finer ones lose context.
 
 ## The Improvement
 
