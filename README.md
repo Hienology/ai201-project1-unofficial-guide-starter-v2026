@@ -384,11 +384,11 @@ whether "15 of 22" is read as a count or as a share (68% of 43 is 30).
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 | --- | --- | --- | --- | --- | --- |
-| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | |
-| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | |
-| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | |
-| 4. Chunks can answer a question on their own | 60 of 72 and 15 of 22 | 63 · 42 of 43 | 63 · 42 of 43 | 63 · 42 of 43 | |
-| 5. Answers are factual, precise and concise | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. Chunks can answer a question on their own | 60 of 72 and 15 of 22 | 63 · 42 of 43 | 63 · 42 of 43 | 63 · 42 of 43 | MET |
+| 5. Answers are factual, precise and concise | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
 
 **The two questions that changed, run 1**, copied unedited from the run log
 (`run_eval.py::run_once`, answers by `generate.py::answer_from_chunks`). The

@@ -15,7 +15,7 @@ with either, and a few words on why after an N.
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S2 · B28 · guide_seasons.md#1
 
@@ -23,7 +23,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y] — the Kestrelford market building back through April fits a question about what's on in the region from March to May.
 
 ### S3 · A24 · guide_elder_ness.md#7
 
@@ -31,7 +31,7 @@ Agree: [ ]
 
 Claude: check 1: Y (Y on cash; Elder Ness has no market or centre (it is one street), and the hospital line contradicts guide_accessibility.md (Marchwood)) · check 3: Y
 
-Agree: [ ]
+Agree: [N] — the same as in the first spot-check: nothing worth answering from; it jumps from cash to mobile coverage to hospitals.
 
 ### S4 · A36 · guide_halden_bay.md#3
 
@@ -39,7 +39,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S5 · B1 · guide_accessibility.md#0
 
@@ -47,7 +47,7 @@ Agree: [ ]
 
 Claude: check 1: N (no facts about any place — it describes the guide's own approach, so there is nothing to answer a question from) · check 3: Y
 
-Agree: [ ]
+Agree: [N] — incoherent: "An honest assessment rather than a promotional one" describes the guide, not the region, and I can't see why it suits an Overview (check 3).
 
 ### S6 · A66 · guide_thornby_wells.md#1
 
@@ -55,7 +55,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S7 · A19 · guide_elder_ness.md#2
 
@@ -63,7 +63,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S8 · B33 · guide_seasons.md#6
 
@@ -79,7 +79,7 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
 
 ### S10 · B25 · guide_regional_transport.md#6
 
@@ -87,4 +87,4 @@ Agree: [ ]
 
 Claude: check 1: Y · check 3: Y
 
-Agree: [ ]
+Agree: [Y]
