@@ -177,18 +177,31 @@ Raw output: `results/milestone4_retrieval.txt`, from `python app.py retrieve`.
 
 ## How I Used AI
 
-<!-- Two specific moments. For each: what you asked for, what came back, and
-     what you changed about it.
+**1. Choosing the test questions.** I asked Claude for ten candidate
+questions spread across the kinds of source this corpus has — a town guide
+only, a cross-cutting guide only, both, several documents together, and
+documents that contradict each other — each with a prediction of how close
+retrieval would get and whether the answer would come back. I picked five. I
+wanted to reword the hospital question to say "medical center"; Claude pointed
+out that phrase appears nowhere in the corpus and would add a vocabulary gap on
+top of the contradiction I was trying to test, so I kept "full hospital" and
+chose Marchwood as the correct answer. When I measured in Milestone 4, two of
+the predictions were wrong: the train-ticket question it called easy was my
+worst (the chunk that answers it ranked 11th, at 0.731), and the hospital
+question it expected to miss put the right chunk first (0.346).
 
-     "I asked Claude to write the chunking function from my notes. It ignored
-     the overlap, so I added that myself" is the level of detail we're after.
-     "I used AI to help me code" is not.
-
-     Milestone 5. -->
-
-**1.**
-
-**2.**
+**2. Marking the chunks for criterion 4.** Reading all 94 chunks by hand
+wasn't practical, so Claude turned the standards I'd given it — factually
+correct, precise, concise, coherent — into a five-check rubric, which I
+approved before anything was marked. A script marks the three mechanical
+checks; Claude marked the two that need reading, 188 marks in all, 3 of them
+N, each with a reason. I audited ten chunks drawn at random with a fixed seed
+and agreed on 8. I disagreed on two copies of the repeated "Practical notes"
+paragraph: Claude called them answerable on their own because you could ask
+whether cash is useful, but to me they jump from cash to mobile coverage to
+hospitals and answer no specific question. That disagreement showed check 1's
+wording can be read two ways, which I'm leaving on record for Unit 2 rather
+than rewording after the count.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
