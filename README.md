@@ -333,34 +333,103 @@ target with no margin.
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** one thing. `chunker.py::split_documents` now cuts each
+`##` section into its paragraphs, and every paragraph keeps the
+`Guide > Section:` prefix (commit `dd8a7a1`). The unit 1 version is kept as
+`chunker.py::split_by_section`. The prompt, the 0.56 cutoff, top-k 5 and the
+embedding model are unchanged. That makes 115 chunks instead of 94: all 72
+town-guide chunks are identical to before, and the 22 cross-cutting chunks
+became 43.
 
-**Why I picked it:**
+**Why I picked it:** the diagnosis puts the criterion 2 miss in chunking — Q2's
+answer shares the railway section's chunk with the timetable, which pulls it
+down to 11th — so the fix gives each idea its own chunk; the comparison
+predicted it would move Q2 to 1st at 0.545, under the cutoff.
 
-<!-- Connect it to a specific diagnosis above in one sentence. If you can't,
-     you picked a fix because it sounded impressive. -->
+### The two alternatives, measured
+
+Both simulated on the unit 1 system, in memory, with nothing in the pipeline
+changed: `simulate_alternatives.py`, output in `results/alternatives.txt`.
+
+**B. Hybrid search** — blend the meaning ranking with a BM25 keyword ranking
+(reciprocal rank fusion) and keep the top five. It does what retrieval can:
+Q2's answer enters its top five, because BM25 ranks that chunk 2nd. But the
+gate still judges the best *meaning-based* distance among the five, which for
+Q2 is 0.625, over the 0.56 cutoff — so Q2 is still refused, the refusal still
+names no file, and criterion 2 stays at 4 of 5. Making it count would take a
+second change, a gate that understands fused scores with a new cutoff to
+calibrate, which unit 2 doesn't allow. And it acts at retrieval, not at the
+chunking stage the diagnosis points to.
+
+**C. Helpful refusal** — when the gate refuses, restate the question, say the
+answer isn't there, and point to the files of the closest chunks. It would
+lift criterion 2 to 5 of 5, since the refusal would name files. But for Q2
+those files are `guide_marchwood.md`, `guide_kestrelford.md` and
+`guide_eating.md` — none of them the one with the answer,
+`guide_regional_transport.md` — and it would send "What is the capital of
+Mongolia?" to Corry Vale. It treats the symptom, a refusal with no source, and
+leaves the cause, a buried answer, in place; its pointers would need their own
+cutoff before they stopped misleading. It's still how I'd want a refusal to
+read, so it's first on my list of next steps.
 
 ### Run Log — After
 
-<!-- Same format, same five criteria, three runs each.
-     `python run_eval.py --label after` -->
+`python run_eval.py --label after`: the same five questions, three runs each,
+caching off, cutoff 0.56, top-k 5. The run log is
+`results/run_2026-09-27_1734_after.md`, added up by `summarize_run.py::summarize`
+into `results/run_2026-09-27_1734_after_criteria.md`. Criterion 4 was
+re-measured on the new chunks (`results/chunk_review_after.md`): Part B now
+has 43 chunks, not 22, and 42 of them pass, which clears the original target
+whether "15 of 22" is read as a count or as a share (68% of 43 is 30).
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 | --- | --- | --- | --- | --- | --- |
-| 1. Retrieved chunk contains the answer | 4 of 5 | | | | |
-| 2. Every answer names a source | 5 of 5 | | | | |
-| 3. Gate stops out-of-corpus questions | 4 of 5 | | | | |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | |
+| 4. Chunks can answer a question on their own | 60 of 72 and 15 of 22 | 63 · 42 of 43 | 63 · 42 of 43 | 63 · 42 of 43 | |
+| 5. Answers are factual, precise and concise | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | |
 
-**Did it help?**
+**The two questions that changed, run 1**, copied unedited from the run log
+(`run_eval.py::run_once`, answers by `generate.py::answer_from_chunks`). The
+other three answered as before; all fifteen answers are in the log.
 
-<!-- Say plainly whether it did, and how you know. If it made things worse,
-     say that — a change that backfired, honestly reported, earns full credit
-     and is more interesting than one that worked. What matters is that you can
-     tell.
+```text
+Q2  How far ahead should I book train tickets to get the cheapest fare?  (best distance 0.545, passed the gate)
+Train tickets are considerably cheaper when booked a week ahead compared to booking them the day before. 
 
-     Milestone 4. -->
+Source: guide_regional_transport.md
+
+Q4  Which town is the best place to visit in winter?  (best distance 0.535, passed the gate)
+Based on the provided documents, there is no mention of which town is the "best" place to visit in winter. However, the documents state that Brightwater carries on during the winter because the university keeps it occupied, while Halden Bay largely closes and Kestrelford can be cut off by snow (guide_seasons.md).
+```
+
+**Criterion 4 after the change**, from `review_chunks.py::count`
+(`python review_chunks.py --label after --count`):
+
+```text
+Part A (town guides): 63 of 72 pass at 4+ of 5
+Part B (cross-cutting guides): 42 of 43 pass at 4+ of 5
+```
+
+**Did it help?** Yes, for the criterion it was aimed at — and it cost another
+question. Criterion 2 went from 4 of 5 in every run to 5 of 5 in every run:
+Q2's tickets paragraph now ranks 1st at 0.545, passes the gate, and every
+answer names `guide_regional_transport.md`. Criteria 1 and 5 stayed at 4 of
+5, but the miss moved from Q2 to Q4. Splitting the cross-cutting sections made
+their winter paragraphs sharper, they now fill Q4's top five (best 0.535), and
+the chunks that name Marchwood fell to 6th and below. With them gone, the
+model said the documents don't name a best winter town and summarised
+`guide_seasons.md` instead — honest, but not the answer. Criterion 3 didn't
+move (5 of 5, nearest out-of-scope still 0.818), and criterion 4's
+cross-cutting part rose from 21 of 22 to 42 of 43. The paragraphs also sit
+closer to the questions they answer: Q3's best distance fell from 0.292 to
+0.195 and Q5's from 0.346 to 0.279.
+
+So one criterion fixed and none pushed below target, but the system's single
+failing question is now Q4 instead of Q2. I know it was the chunker because
+the before and after runs differ only in that one commit, and the same
+`scorer.py` produced both tables.
 
 ## What's Still Broken
 
