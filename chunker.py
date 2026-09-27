@@ -3,9 +3,11 @@ Stage 2 of the pipeline: splitting documents into chunks.
 
 ⚠️ THIS IS THE FILE YOU CHANGE IN MILESTONE 3.
 
-`split_documents` below cuts on the guides' own `##` headings: one section, one
-chunk, each prefixed with the guide's title and the section's heading. The
-starter's version cut every document into fixed 800-character pieces, which on
+`split_documents` below cuts the guides at their own `##` headings and then at
+each paragraph within a section, every piece prefixed with the guide's title
+and the section's heading. Unit 1 cut at headings alone; that version is
+`split_by_section`, and unit 2's diagnosis is why it changed. The starter's
+version cut every document into fixed 800-character pieces, which on
 city_guides meant 51 chunks that started and ended mid-word ("urs", "9p") and
 ran straight across section boundaries. That version is `fallback_split`.
 
@@ -163,9 +165,33 @@ def split_by_section(documents: list[Document]) -> list[Chunk]:
     return _chunk(documents, _whole_section, "chunker.py::split_by_section")
 
 
+def _each_paragraph(text: str) -> list[str]:
+    return [
+        piece
+        for paragraph in text.split("\n\n")
+        if paragraph.strip()
+        for piece in _whole_section(paragraph.strip())
+    ]
+
+
 def split_documents(documents: list[Document]) -> list[Chunk]:
-    """The chunker the pipeline uses. For now, one section per chunk."""
-    return _chunk(documents, _whole_section, "chunker.py::split_documents")
+    """
+    Split each guide into its paragraphs, each prefixed with its section.
+
+    Unit 1 cut on `##` headings alone (`split_by_section`), assuming one
+    heading holds one idea. It mostly does — but a heading can hold two. "The
+    railway" has a paragraph on the line and its timetable, then one on ticket
+    prices, and as one chunk the timetable half pulled it away from a ticket
+    question: 11th for "how far ahead should I book train tickets", outside
+    the top five. Cutting at the blank line between paragraphs as well gives
+    each idea its own chunk and its own embedding.
+
+    Sections with one paragraph — every town guide's — come out exactly as
+    before. Only the multi-paragraph sections, all in the cross-cutting
+    guides, split. Every piece keeps the "{title} > {heading}: " prefix, so a
+    paragraph read on its own still says where it's from.
+    """
+    return _chunk(documents, _each_paragraph, "chunker.py::split_documents")
 
 
 def describe(chunks: list[Chunk]) -> str:
