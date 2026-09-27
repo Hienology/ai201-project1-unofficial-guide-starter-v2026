@@ -1,0 +1,439 @@
+{
+  "marked_by": "Claude (claude-opus-5-5), 2026-09-27, reading each new chunk's full text",
+  "rubric": {
+    "1": "Answerable alone — Using only this chunk, someone could give a factually correct answer to a question about its topic (for a chunk covering several towns: a question about any one of them).",
+    "3": "One line of ideas — Every sentence serves the topic named in its heading."
+  },
+  "how_marked": "Only the chunks whose text is new after unit 2's paragraph split; every other chunk keeps its mark from chunk_judgments.json by fingerprint. Same reading as before: check 1 literally (any natural question on the chunk's topic answerable correctly from it alone, judged against the whole corpus), check 3 strictly (N if any sentence belongs under a different heading).",
+  "marks": {
+    "guide_accessibility.md#1": {
+      "fingerprint": "16be04ed74",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#2": {
+      "fingerprint": "dd9d536dec",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#3": {
+      "fingerprint": "359df32a7c",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#4": {
+      "fingerprint": "1ac632bb34",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#5": {
+      "fingerprint": "6dda9bcb45",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#6": {
+      "fingerprint": "b7e488c7e6",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#7": {
+      "fingerprint": "cda30e8166",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#8": {
+      "fingerprint": "4dfa6ab96f",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#9": {
+      "fingerprint": "27d2c3baaa",
+      "1": [
+        "Y",
+        "Y; its hospital line (Marchwood) contradicts the Practical notes in all nine town guides (Brightwater)"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_accessibility.md#10": {
+      "fingerprint": "484509724f",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#0": {
+      "fingerprint": "254e943740",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#1": {
+      "fingerprint": "897f8ed88a",
+      "1": [
+        "Y",
+        "Y on where to eat in Marchwood (Northgate, a tram ride away); but 'the exception' points back to a pattern stated in the previous paragraph, now a separate chunk"
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#2": {
+      "fingerprint": "85575212e7",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_eating.md#3": {
+      "fingerprint": "5dacf113b5",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#0": {
+      "fingerprint": "6c55aab34a",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#1": {
+      "fingerprint": "6ac0b00d0b",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#2": {
+      "fingerprint": "7c4fefcf5f",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#3": {
+      "fingerprint": "68ee9bc3c7",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#4": {
+      "fingerprint": "301c3cc784",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#5": {
+      "fingerprint": "45e2577d12",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#6": {
+      "fingerprint": "50e07c2e14",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_regional_transport.md#7": {
+      "fingerprint": "ebe041aad9",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#0": {
+      "fingerprint": "fc8be05cd5",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#1": {
+      "fingerprint": "87ffd2282e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#2": {
+      "fingerprint": "6f0e3e425d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#3": {
+      "fingerprint": "4a3bf5e72d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#4": {
+      "fingerprint": "55fa047c0e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#5": {
+      "fingerprint": "435ab3ec57",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#6": {
+      "fingerprint": "1ad1ffc24e",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_seasons.md#7": {
+      "fingerprint": "c23cc9b084",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#0": {
+      "fingerprint": "0433cd353d",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#1": {
+      "fingerprint": "8ed2b30456",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#2": {
+      "fingerprint": "84d5ea022a",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#3": {
+      "fingerprint": "03bbe08ed3",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#4": {
+      "fingerprint": "285aa388a2",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "N",
+        "the Givens Mill–Brightwater walk is 'easy underfoot' along a river, not a walk with hills, and it already appears under 'Easy, on good surfaces'"
+      ]
+    },
+    "guide_walking.md#5": {
+      "fingerprint": "a0642ef1ca",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#6": {
+      "fingerprint": "8967f1e816",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        "Y; the road-flooding sentence is about reaching the Elder Ness walk rather than the walk itself, but it is the tide-dependence the heading names"
+      ]
+    },
+    "guide_walking.md#7": {
+      "fingerprint": "8e6fe06eef",
+      "1": [
+        "Y",
+        ""
+      ],
+      "3": [
+        "Y",
+        ""
+      ]
+    },
+    "guide_walking.md#8": {
+      "fingerprint": "b76f5d7199",
+      "1": [
+        "Y",
+        "Y that Kestrelford can be cut off in snow, which guide_kestrelford.md also says; but 'not gritted above the second village' is Corry Vale's road in guide_corry_vale.md"
+      ],
+      "3": [
+        "N",
+        "it is about the Kestrelford approach road being impassable to traffic in snow, not about walking"
+      ]
+    }
+  }
+}

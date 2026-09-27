@@ -6,6 +6,9 @@ The measurement for criterion 4: five checks on every chunk, and a count.
     python review_chunks.py --spotcheck  write results/chunk_spotcheck.md, once
     python review_chunks.py --count      count passes and spot-check agreement
 
+Add `--label after` to any of them to work on results/chunk_review_after.md
+and results/chunk_spotcheck_after.md instead, after a change to the chunker.
+
 Criterion 4 scores every chunk `chunker.py::split_documents` makes on five
 yes/no checks and passes it at 4 or more. Checks 2, 4 and 5 are mechanical,
 and this script marks them. Checks 1 and 3 need reading — is the chunk
@@ -19,9 +22,11 @@ seed, so the draw can't be re-rolled, each showing Claude's two marks to agree
 or disagree with. The agreement is reported next to the count.
 
 Chunking is deterministic, so one sheet is the measurement for all three runs
-in unit 2. Each judgment is stored with a fingerprint of the chunk's text; if
-the chunker changes, marks for chunks whose text changed are dropped rather
-than silently reused.
+in unit 2. Each judgment is stored with a fingerprint of the chunk's text and
+found again by that fingerprint, so after a change to the chunker a chunk
+whose text is identical keeps its mark and a chunk whose text changed needs a
+new one — in results/chunk_judgments_after.json — rather than inheriting an
+old mark.
 """
 
 import argparse
@@ -65,9 +70,14 @@ PASS_MARK = 4
 SPOTCHECK_SIZE = 10
 SPOTCHECK_SEED = 201
 
-SHEET = config.RESULTS_DIR / "chunk_review.md"
-SPOTCHECK = config.RESULTS_DIR / "chunk_spotcheck.md"
-JUDGMENTS = config.RESULTS_DIR / "chunk_judgments.json"
+JUDGMENT_FILES = "chunk_judgments*.json"
+
+
+def paths(label: str = "") -> tuple:
+    """The review sheet and spot-check for one measurement, e.g. label "after"."""
+    suffix = f"_{label}" if label else ""
+    return (config.RESULTS_DIR / f"chunk_review{suffix}.md",
+            config.RESULTS_DIR / f"chunk_spotcheck{suffix}.md")
 
 PREFIX = re.compile(r"^[^\n>]+ > [^\n:]+: ")
 NUMBER_WORDS = re.compile(
@@ -122,22 +132,12 @@ def mechanical_checks(chunks) -> dict[str, dict[str, tuple[str, str]]]:
 
 
 def load_judgments(chunks) -> dict[str, dict[str, tuple[str, str]]]:
-    """Claude's marks for checks 1 and 3, kept only where the chunk is unchanged."""
-    if not JUDGMENTS.exists():
-        return {}
-    stored = json.loads(JUDGMENTS.read_text(encoding="utf-8"))["marks"]
-    current = {c.label: fingerprint(c.text) for c in chunks}
-    kept, stale = {}, []
-    for label, entry in stored.items():
-        if current.get(label) != entry["fingerprint"]:
-            stale.append(label)
-            continue
-        kept[label] = {k: tuple(entry[k]) for k in ("1", "3")}
-    if stale:
-        print(f"Dropped {len(stale)} judgment(s) whose chunk text changed: "
-              + ", ".join(stale[:5]) + (" …" if len(stale) > 5 else ""),
-              file=sys.stderr)
-    return kept
+    """Claude's marks for checks 1 and 3, matched to chunks by their text's fingerprint."""
+    by_print = {}
+    for path in sorted(config.RESULTS_DIR.glob(JUDGMENT_FILES)):
+        for entry in json.loads(path.read_text(encoding="utf-8"))["marks"].values():
+            by_print[entry["fingerprint"]] = {k: tuple(entry[k]) for k in ("1", "3")}
+    return {c.label: by_print[fp] for c in chunks if (fp := fingerprint(c.text)) in by_print}
 
 
 def score_all(corpus: str):
@@ -181,15 +181,15 @@ def _reasons(row) -> list[str]:
             if mark == "N" or reason]
 
 
-def write_sheet(rows, corpus: str) -> None:
+def write_sheet(rows, corpus: str, sheet, spotcheck) -> None:
     lines = [
         "# Chunk review — criterion 4",
         "",
         f"- Produced by: `review_chunks.py::write_sheet`, chunks from "
         f"`{rows[0]['chunk'].produced_by}`, corpus `{corpus}`",
         f"- Checks 2, 4 and 5 marked by this script. Checks 1 and 3 marked by "
-        f"Claude (`{os.path.relpath(JUDGMENTS, config.ROOT)}`), audited in "
-        f"`{os.path.relpath(SPOTCHECK, config.ROOT)}`.",
+        f"Claude (`results/{JUDGMENT_FILES}`, matched by the text's fingerprint), "
+        f"audited in `{os.path.relpath(spotcheck, config.ROOT)}`.",
         f"- A chunk passes at {PASS_MARK} or more of 5.",
         "",
         "| # | Check | Marked by |",
@@ -209,12 +209,12 @@ def write_sheet(rows, corpus: str) -> None:
             if reasons:
                 lines += [""] + reasons
 
-    SHEET.parent.mkdir(exist_ok=True)
-    SHEET.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"Wrote {os.path.relpath(SHEET, config.ROOT)}")
+    sheet.parent.mkdir(exist_ok=True)
+    sheet.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Wrote {os.path.relpath(sheet, config.ROOT)}")
 
 
-def write_spotcheck(rows) -> None:
+def write_spotcheck(rows, spotcheck) -> None:
     drawn = random.Random(SPOTCHECK_SEED).sample(rows, SPOTCHECK_SIZE)
     lines = [
         "# Spot-check — criterion 4",
@@ -239,11 +239,11 @@ def write_spotcheck(rows) -> None:
         lines += ["", f"### S{n} · {row['id']} · {row['chunk'].label}", "", f"> {quoted}",
                   "", f"Claude: {claude}", "", "Agree: [ ]"]
 
-    SPOTCHECK.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"Wrote {os.path.relpath(SPOTCHECK, config.ROOT)} ({SPOTCHECK_SIZE} chunks)")
+    spotcheck.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Wrote {os.path.relpath(spotcheck, config.ROOT)} ({SPOTCHECK_SIZE} chunks)")
 
 
-def count(rows) -> None:
+def count(rows, spotcheck) -> None:
     for part, name in (("A", "town guides"), ("B", "cross-cutting guides")):
         group = [r for r in rows if r["part"] == part]
         unmarked = sum(not r["complete"] for r in group)
@@ -258,8 +258,8 @@ def count(rows) -> None:
                              if mark == "N")
             print(f"  {r['id']} {r['chunk'].label} — {r['score']}/5: {noes}")
 
-    if SPOTCHECK.exists():
-        answers = re.findall(r"^Agree: \[(.*?)\]", SPOTCHECK.read_text(encoding="utf-8"), re.M)
+    if spotcheck.exists():
+        answers = re.findall(r"^Agree: \[(.*?)\]", spotcheck.read_text(encoding="utf-8"), re.M)
         agreed = sum(a.strip().upper() == "Y" for a in answers)
         blank = sum(a.strip().upper() not in {"Y", "N"} for a in answers)
         print(f"\nSpot-check: you agreed with Claude on {agreed} of {len(answers)}"
@@ -272,20 +272,22 @@ def main():
     parser.add_argument("--spotcheck", action="store_true", help="write the spot-check sheet")
     parser.add_argument("--corpus", default=None)
     parser.add_argument("--force", action="store_true", help="overwrite an existing spot-check")
+    parser.add_argument("--label", default="", help='a name for this measurement, e.g. "after"')
     args = parser.parse_args()
 
     corpus = args.corpus or config.CORPUS
     rows = score_all(corpus)
+    sheet, spotcheck = paths(args.label)
 
     if args.count:
-        count(rows)
+        count(rows, spotcheck)
     elif args.spotcheck:
-        if SPOTCHECK.exists() and not args.force:
-            sys.exit(f"{os.path.relpath(SPOTCHECK, config.ROOT)} already exists and may "
+        if spotcheck.exists() and not args.force:
+            sys.exit(f"{os.path.relpath(spotcheck, config.ROOT)} already exists and may "
                      f"have your answers in it. Use --force to start over.")
-        write_spotcheck(rows)
+        write_spotcheck(rows, spotcheck)
     else:
-        write_sheet(rows, corpus)
+        write_sheet(rows, corpus, sheet, spotcheck)
 
 
 if __name__ == "__main__":
