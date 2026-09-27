@@ -1,0 +1,10 @@
+# Prompt probe (not a test question): python app.py ask "Which restaurants in Kestrelford are vegetarian-friendly?" — 2026-09-27 00:38, cutoff 0.56, prompt unchanged
+  (best distance 0.371, cutoff 0.56)
+
+I do not have enough information to answer this question. 
+
+Sources: guide_kestrelford.md, guide_eating.md
+
+Sources retrieved: guide_eating.md, guide_kestrelford.md
+
+1 model calls this session, 595 tokens (567 in, 28 out)
